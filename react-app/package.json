@@ -14,12 +14,22 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start lint:watch",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "esw webpack.config.* src tools --color",
+    "lint:watch": "npm run lint -- --watch"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-react": "^7.6.1",
+    "eslint-watch": "^3.1.3"
   }
 }

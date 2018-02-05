@@ -1,14 +1,19 @@
-import { UPDATE_STATE } from '../actions'
+import {
+    GET_POSTS,
+    SET_EVALUATION_POSTS
+} from '../actions'
 
 const initialState = {
-    isVisible: true
+    posts: [],
+    evaluation: ''
 }
 
 const appReducer = (state = initialState, action) => {
-    console.log('action: ', action.isVisible);
     switch (action.type) {
-        case UPDATE_STATE:
-            return { ...state, isVisible: action.isVisible }
+        case GET_POSTS:
+            return { ...action.payload };
+        case SET_EVALUATION_POSTS:
+            return { ...action.payload }
         default:
             return state;
     }

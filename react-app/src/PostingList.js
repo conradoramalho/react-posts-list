@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import Header from "./components/header/Header";
-import Posts from './components/posts/Posts'
+import Post from './components/posts/Posts'
 import Grid from 'material-ui/Grid';
+import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { getPosts } from './actions';
 
-export default class PostingList extends Component {
+class PostingList extends Component {
+    componentDidMount() {
+        this.props.getPosts();
+    }
+
     render() {
         return (
             <div>
@@ -11,13 +18,32 @@ export default class PostingList extends Component {
                     <Grid item xs={12}>
                         <Header title='List of posts' />
                     </Grid>
-                    {[0, 1, 2, 3].map(value => (
-                        <Grid item xs={6}>
-                            <Posts />
-                        </Grid>
-                    ))}
+                    {
+                        this.props.posts && this.props.posts.map(post => (
+                            <Grid container key={post.id}>
+                                <Grid item xs={6}>
+                                    <Post post={post} />
+                                </Grid>
+                            </Grid>
+                        ))
+                    }
                 </Grid>
             </div>
         )
     }
 }
+
+function mapStateToProps({ posts }) {
+    return {
+        posts
+    }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    getPosts
+}, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PostingList)
