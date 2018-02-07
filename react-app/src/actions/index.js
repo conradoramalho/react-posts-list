@@ -1,8 +1,9 @@
 import 'whatwg-fetch';
 const headers = { 'Authorization': 'whatever-you-want' };
+const apiAddress = 'http://localhost:3002'
 
 export const GET_POSTS = 'GET_POSTS';
-export const SET_EVALUATION_POSTS = 'SET_EVALUATION_POSTS';
+export const SET_EVALUATION_POST = 'SET_EVALUATION_POST';
 
 export function getLeadsSuccess(data) {
     return {
@@ -13,14 +14,14 @@ export function getLeadsSuccess(data) {
 
 export function setEvaluationSuccess(data) {
     return {
-        type: SET_EVALUATION_POSTS,
+        type: SET_EVALUATION_POST,
         payload: data
     };
 }
 
 export function getPosts() {
     return (dispatch) => {
-        return fetch('http://localhost:3001/posts', { headers })
+        return fetch(`${apiAddress}/posts`, { headers })
             .then(
             response => response.json(),
             error => console.log('error', error)
@@ -28,12 +29,21 @@ export function getPosts() {
     }
 }
 
-export function setEvaluation(evaluation) {
+export function setEvaluation(postId, evaluation) {
+    const body = {
+        option: evaluation
+    };
+
     return (dispatch) => {
-        return fetch('', { headers })
+        return fetch(`${apiAddress}/posts/${postId}`, {
+            method: 'POST', headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(body)
+        })
             .then(
             response => response.json(),
             error => console.log('error', error)
-            ).then(json => dispatch(setEvaluationSuccess({ json })))
+            ).then(data => dispatch(setEvaluationSuccess({ postId, data })))
     }
 }

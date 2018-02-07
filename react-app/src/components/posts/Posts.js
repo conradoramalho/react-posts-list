@@ -1,14 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
-import StarIcon from 'material-ui-icons/Star';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import CommentIcon from 'material-ui-icons/Comment';
+import { Grid, Button, IconButton, Typography } from 'material-ui';
+import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import './Posts.css';
+import {
+    Add,
+    Star,
+    ThumbDown,
+    ThumbUp,
+    Comment
+} from 'material-ui-icons';
 import Dialog, {
     DialogActions,
     DialogContent,
@@ -16,33 +18,43 @@ import Dialog, {
     DialogTitle,
 } from 'material-ui/Dialog';
 
+import './Posts.css';
 import { setEvaluation } from '../../actions';
 
-import TextField from 'material-ui/TextField';
+class Post extends Component {
+    constructor(props) {
+        super(props);
 
-export default class Post extends Component {
-    state = {
-        open: false,
-        evaluation: 0
-    };
+        this.state = {
+            open: false,
+            evaluation: 0
+        };
+    }
+
+    handleDown = () => {
+        this.setState({ evaluation: 'downVote' });
+    }
+
+    handleUp = () => {
+        this.setState({ evaluation: 'upVote' });
+    }
 
     handleOpen = () => {
         this.setState({ open: true });
-    };
+    }
 
     handleClose = () => {
-        this.setState({ open: false });
-    };
+        this.setState({ open: false, evaluation: '' });
+    }
 
     handleSave = () => {
         const evaluation = this.state.evaluation;
-        setEvaluation(evaluation);
-        this.setState({ open: false });
+        if (evaluation) {
+            this.props.setEvaluation(this.props.post.id, evaluation);
+            this.setState({ open: false });
+        }
     }
 
-    handleChange = () => event => {
-        this.setState({ evaluation: event.target.value });
-    }
 
     render() {
         const { post } = this.props;
@@ -80,13 +92,13 @@ export default class Post extends Component {
                                     <Typography component="p" noWrap>
                                         {post.voteScore}
                                     </Typography>
-                                    <StarIcon />
+                                    <Star />
                                 </IconButton>
                                 <IconButton aria-label="Comments">
                                     <Typography component="p" noWrap>
                                         {post.commentCount}
                                     </Typography>
-                                    <CommentIcon />
+                                    <Comment />
                                 </IconButton>
                                 <Typography className="register-date" component="p">
                                     <Moment format="YYYY/MM/DD" >
@@ -94,7 +106,7 @@ export default class Post extends Component {
                                     </Moment>
                                 </Typography>
                                 <IconButton>
-                                    <AddIcon />
+                                    <Add />
                                 </IconButton>
                             </CardActions>
                         </Card>
@@ -110,15 +122,12 @@ export default class Post extends Component {
                         <DialogContentText>
                             Set an evaluation about this post.
                         </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Evaluation"
-                            type="number"
-                            value={this.state.evaluation}
-                            onChange={this.handleChange()}
-                        />
+                        <IconButton aria-label="thumb_down" onClick={this.handleDown}>
+                            <ThumbDown />
+                        </IconButton>
+                        <IconButton aria-label="Star" onClick={this.handleUp}>
+                            <ThumbUp />
+                        </IconButton>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
@@ -133,3 +142,9 @@ export default class Post extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    setEvaluation
+}, dispatch);
+
+export default connect('', mapDispatchToProps)(Post)
