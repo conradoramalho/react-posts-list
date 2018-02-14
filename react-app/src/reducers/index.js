@@ -1,17 +1,25 @@
 import {
     GET_POSTS,
+    GET_POST,
+    GET_COMMENTS,
     SET_EVALUATION_POST
 } from '../actions'
 
 const initialState = {
+    post: {},
     posts: [],
-    evaluation: ''
+    evaluation: '',
+    comments: []
 }
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_POSTS:
-            return { ...action.payload };
+            return Object.assign({}, state, action.payload);
+        case GET_POST:
+            return { ...state, post: { ...action.payload } };
+        case GET_COMMENTS:
+            return { ...state, comments: { ...action.payload } };
         case SET_EVALUATION_POST:
             return setEvaluation(state, action.payload)
         default:

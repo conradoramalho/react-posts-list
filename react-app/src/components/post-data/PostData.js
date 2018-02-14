@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import { Grid, Button, IconButton, Typography } from 'material-ui';
 import { bindActionCreators } from "redux";
@@ -19,10 +18,10 @@ import Dialog, {
     DialogTitle,
 } from 'material-ui/Dialog';
 
-import './Posts.css';
-import { setEvaluation } from '../../actions';
+import './PostData.css';
+import { getPost, getComments } from '../../actions';
 
-class Post extends Component {
+class PostData extends Component {
     constructor(props) {
         super(props);
 
@@ -56,12 +55,16 @@ class Post extends Component {
         }
     }
 
+    componentWillMount = () => {
+        this.props.getPost(this.props.match.params.postId);
+        this.props.getComments(this.props.match.params.postId);
+    }
 
     render() {
-        const { post } = this.props;
+        const { post, comments } = this.props;
 
         return (
-            <Link to={`/posts/${post.id}`}>
+            <Fragment>
                 <div>
                     {
                         post &&
@@ -139,13 +142,21 @@ class Post extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-            </Link>
+            </Fragment >
         );
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        post: state.post,
+        comments: state.comments
+    }
+}
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    setEvaluation
+    getPost,
+    getComments
 }, dispatch);
 
-export default connect('', mapDispatchToProps)(Post)
+export default connect(mapStateToProps, mapDispatchToProps)(PostData)
