@@ -1,0 +1,46 @@
+.header-card{
+    border-bottom: 1px solid #dfdfdf;
+    margin-bottom: 10px;    
+    padding: 0px 8px;
+}
+
+.header-card > :first-child{
+    margin-bottom: 3px !important;
+}
+
+.category{
+    text-transform: uppercase;
+}
+
+.author{
+    text-align: right;
+}
+
+.title{
+    margin: 0 0 10px !important;
+}
+
+.card-icons p, svg{
+    color: #555555;
+}
+
+.card-icons button{
+    display: flex;
+    align-self: center;
+}
+
+.card-icons p{
+    font-size: 12px;
+}
+
+.card-icons p:not(.date){
+    margin: 0 5px 0 0;
+}
+
+.card-icons svg{
+    font-size: 18px;
+}
+
+.register-date{
+    margin: 0 auto !important;
+}
