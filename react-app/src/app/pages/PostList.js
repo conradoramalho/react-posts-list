@@ -5,15 +5,17 @@ import PostCard from '../components/post-card/PostCard'
 import Grid from 'material-ui/Grid';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import { getPosts } from '../actions';
+import { requestPostsList } from '../actions';
 
 class PostList extends Component {
     async componentDidMount() {
-        await this.props.getPosts();
+        await this.props.requestPostsList();
     }
 
     render() {
+        debugger
         const { posts } = this.props;
+
         return (
             <div>
                 <Grid container spacing={24}>
@@ -37,17 +39,18 @@ class PostList extends Component {
     }
 }
 
-function mapStateToProps({ postsReducer }) {
-    const { posts } = postsReducer;
-    return { posts }
+function mapStateToProps({ postList }) {
+    return {
+        posts: postList.data
+    }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPosts
+    requestPostsList
 }, dispatch);
 
 PostList.propTypes = {
-    getPosts: PropTypes.func,
+    requestPostsList: PropTypes.func,
     posts: PropTypes.array,
 }
 

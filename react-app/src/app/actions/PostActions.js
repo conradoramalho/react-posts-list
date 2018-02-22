@@ -48,14 +48,13 @@ export function setEvaluationSuccess(data) {
 
 export async function getPosts() {
     return async (dispatch) => {
-        debugger
 
-        const req = await fetch(`${apiAddress}/posts`, { headers })
-        dispatch(getLeadsSuccess(json)
-            // .then(
-            //     response => response.json(),
-            //     error => console.log('error', error)
-            // ).then(json => dispatch(getLeadsSuccess(json)))
+        // const req = await fetch(`${apiAddress}/posts`, { headers })
+        // dispatch(getLeadsSuccess(json)
+        // .then(
+        //     response => response.json(),
+        //     error => console.log('error', error)
+        // ).then(json => dispatch(getLeadsSuccess(json)))
     }
 }
 
