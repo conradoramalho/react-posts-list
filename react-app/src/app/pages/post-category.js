@@ -5,17 +5,14 @@ import PostCard from '../components/post-card/PostCard'
 import Grid from 'material-ui/Grid';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import { requestPostsList } from '../actions';
+import { getPostCategory } from '../actions';
 
 class PostList extends Component {
-    async componentDidMount() {
-        await this.props.requestPostsList();
+    componentDidMount() {
+        this.props.getPostCategory(this.props.match.params.category);
     }
 
     render() {
-        debugger
-        const { posts } = this.props;
-
         return (
             <div>
                 <Grid container spacing={24}>
@@ -23,15 +20,13 @@ class PostList extends Component {
                         <Header title='List of posts' />
                     </Grid>
                     {
-                        posts && (
-                            posts.map(post => (
-                                <Grid container key={post.id}>
-                                    <Grid item xs={6}>
-                                        <PostCard post={post} />
-                                    </Grid>
+                        this.props.posts && this.props.posts.map(post => (
+                            <Grid container key={post.id}>
+                                <Grid item xs={6}>
+                                    <PostCard post={post} />
                                 </Grid>
-                            )
-                            ))
+                            </Grid>
+                        ))
                     }
                 </Grid>
             </div>
@@ -39,18 +34,17 @@ class PostList extends Component {
     }
 }
 
-function mapStateToProps({ postList }) {
-    return {
-        posts: postList.data
-    }
+function mapStateToProps({ postsReducer }) {
+    const { posts } = postsReducer;
+    return { posts }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    requestPostsList
+    getPostCategory
 }, dispatch);
 
 PostList.propTypes = {
-    requestPostsList: PropTypes.func,
+    getPostsCategory: PropTypes.func,
     posts: PropTypes.array,
 }
 

@@ -15,7 +15,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 import './PostCard.css';
-import { setEvaluation } from '../../actions';
+import { setPostEvaluation } from '../../actions';
 
 class PostCard extends Component {
     constructor(props) {
@@ -46,7 +46,7 @@ class PostCard extends Component {
     handleSave = () => {
         const evaluation = this.state.evaluation;
         if (evaluation) {
-            this.props.setEvaluation(this.props.post.id, evaluation);
+            this.props.setPostEvaluation(this.props.post.id, evaluation);
             this.setState({ open: false });
         }
     }
@@ -139,7 +139,7 @@ class PostCard extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    setEvaluation
+    setPostEvaluation
 }, dispatch);
 
 PostCard.propTypes = {

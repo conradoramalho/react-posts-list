@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from "react-router-dom"
-import PostList from '../app/pages/PostList'
-import PostCategory from '../app/pages/PostCategory'
-import PostData from '../app/pages/PostData';
+import PostList from '../app/pages/post-list'
+import PostCategory from '../app/pages/post-category'
+import PostData from '../app/pages/post-data';
 
 const Routes = () => {
     return (

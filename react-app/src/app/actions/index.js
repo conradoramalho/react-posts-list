@@ -1,3 +1,2 @@
-export * from './CommentsActions'
-export * from './PostActions'
-export * from './post'
+export * from './comment-actions'
+export * from './post-actions' 

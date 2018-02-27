@@ -5,14 +5,16 @@ import PostCard from '../components/post-card/PostCard'
 import Grid from 'material-ui/Grid';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import { getPostsCategory } from '../actions';
+import { getPostList } from '../actions';
 
 class PostList extends Component {
-    componentDidMount() {
-        this.props.getPostsCategory(this.props.match.params.category);
+    async componentDidMount() {
+        await this.props.getPostList();
     }
 
     render() {
+        const { posts } = this.props;
+
         return (
             <div>
                 <Grid container spacing={24}>
@@ -20,13 +22,15 @@ class PostList extends Component {
                         <Header title='List of posts' />
                     </Grid>
                     {
-                        this.props.posts && this.props.posts.map(post => (
-                            <Grid container key={post.id}>
-                                <Grid item xs={6}>
-                                    <PostCard post={post} />
+                        posts && (
+                            posts.map(post => (
+                                <Grid container key={post.id}>
+                                    <Grid item xs={6}>
+                                        <PostCard post={post} />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        ))
+                            )
+                            ))
                     }
                 </Grid>
             </div>
@@ -34,17 +38,18 @@ class PostList extends Component {
     }
 }
 
-function mapStateToProps({ postsReducer }) {
-    const { posts } = postsReducer;
-    return { posts }
+function mapStateToProps(state) {
+    return {
+        posts: state.postsReducer.data
+    }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostsCategory
+    getPostList
 }, dispatch);
 
 PostList.propTypes = {
-    getPostsCategory: PropTypes.func,
+    requestPostsList: PropTypes.func,
     posts: PropTypes.array,
 }
 
