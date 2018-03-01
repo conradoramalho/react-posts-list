@@ -14,7 +14,7 @@ import Dialog, {
     DialogTitle,
 } from 'material-ui/Dialog';
 
-import './PostCard.css';
+import './post-card.css';
 import { setPostEvaluation } from '../../actions';
 
 class PostCard extends Component {
@@ -55,7 +55,7 @@ class PostCard extends Component {
         const { post } = this.props;
 
         return (
-            <Link to={`/${post.category}/${post.id}`}>
+            <Link to={`/category/${post.category}/post/${post.id}`}>
                 <div>
                     {
                         post &&

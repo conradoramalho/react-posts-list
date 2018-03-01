@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import Header from '../components/header/Header';
-import PostCard from '../components/post-card/PostCard'
+import PostCard from '../components/post-card/post-card'
 import Grid from 'material-ui/Grid';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
@@ -34,9 +34,10 @@ class PostList extends Component {
     }
 }
 
-function mapStateToProps({ postsReducer }) {
-    const { posts } = postsReducer;
-    return { posts }
+function mapStateToProps(state) {
+    return {
+        posts: state.postsReducer.posts
+    }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

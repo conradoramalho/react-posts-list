@@ -1,0 +1,23 @@
+.post-data{
+    padding: 20px;
+}
+
+.title{
+    text-align: center;
+}
+
+.author{
+    display: flex;
+    flex: 0 0 50%;
+    
+}
+
+.category{
+    flex: 0 0 50%;
+    text-align: right;
+    display: flex;
+}
+
+.body{
+    margin-bottom: 30px;
+}
