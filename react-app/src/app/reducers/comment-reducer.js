@@ -1,47 +1,22 @@
-// import {
-//     GET_POSTS,
-//     GET_POST,
-//     GET_COMMENTS,
-//     SET_EVALUATION_POST
-// } from '../actions'
+import * as ACTIONS from '../actions/comment-actions';
 
 const initialState = {
-    post: {},
-    posts: [],
-    evaluation: '',
-    comments: []
+    comments: [],
+    loading: false,
+    error: {}
 }
 
 const commentsReducer = (state = initialState, action) => {
-    // switch (action.type) {
-    //     case GET_POSTS:
-    //         return Object.assign({}, state, action.payload);
-    //     case GET_POST:
-    //         return { ...state, post: { ...action.payload } };
-    //     case GET_COMMENTS:
-    //         return { ...state, comments: { ...action.payload } };
-    //     case SET_EVALUATION_POST:
-    //         return setEvaluation(state, action.payload)
-    //     default:
-    return state;
-    // }
+    switch (action.type) {
+        case ACTIONS.COMMENTS_REQUEST:
+            return { ...state, loading: true };
+        case ACTIONS.COMMENTS_REQUEST_SUCCESS:
+            return { ...state, comments: action.payload, loading: false, error: {} };
+        case ACTIONS.COMMENTS_REQUEST_FAILURE:
+            return { ...state, comments: {}, loading: false, error: action.payload };
+        default:
+            return state;
+    }
 }
 
 export default commentsReducer;
-
-function setEvaluation(state, { postId, data }) {
-    const newPosts = state.posts.map((item) => {
-        if (postId !== item.id) {
-            return item;
-        }
-
-        return {
-            ...item,
-            ...data
-        };
-    });
-
-    state.posts = newPosts;
-
-    return { ...state };
-}

@@ -1,6 +1,6 @@
 import instance from './api.config';
 
-function getComments(postId) {
+function getCommentsByPostId(postId) {
     return instance({
         method: 'GET',
         url: `/posts/${postId}/comments`,
@@ -41,7 +41,7 @@ export function setEvaluation(postId, evaluation) {
 }
 
 const API = {
-    getComments,
+    getCommentsByPostId,
     getPostById,
     getPostCategories,
     setEvaluation,

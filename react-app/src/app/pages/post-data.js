@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import Header from "../components/header/Header";
 import { getPostById } from '../actions/post-actions';
+import { getCommentsByPostId } from '../actions/comment-actions';
 import { CardActions, IconButton, Typography, Paper } from 'material-ui';
 import Moment from 'react-moment';
 import { Add, Star, Comment } from 'material-ui-icons';
@@ -10,11 +11,12 @@ import './post-data.css';
 
 class PostData extends Component {
     componentWillMount() {
-        this.props.getPostById(this.props.match.params.postId)
+        this.props.getPostById(this.props.match.params.postId);
+        this.props.getCommentsByPostId(this.props.match.params.postId);
     }
 
     render() {
-        const { post } = this.props;
+        const { post, comments } = this.props;
 
         return (
             <div>
@@ -23,7 +25,7 @@ class PostData extends Component {
                     <Typography className="title" variant="headline" component="h1">
                         {post.title}
                     </Typography>
-                    <Typography class="author" component="h4">
+                    <Typography className="author" component="h4">
                         {post.author}
                     </Typography>
                     <Typography className="category" component="h4">
@@ -55,6 +57,15 @@ class PostData extends Component {
                         </IconButton>
                     </CardActions>
                 </Paper>
+                <Paper className="post-data" elevation={3}>
+                    {
+                        comments.map(comment => (
+                            <Typography key={comment.id} className="body" component="p">
+                                {comment}
+                            </Typography>
+                        ))
+                    }
+                </Paper>
             </div>
         )
     }
@@ -62,12 +73,14 @@ class PostData extends Component {
 
 function mapStateToProps(state) {
     return {
-        post: state.postsReducer.post
+        post: state.postsReducer.post,
+        comments: state.commentsReducer.comments
     }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostById
+    getPostById,
+    getCommentsByPostId
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData)
