@@ -40,12 +40,21 @@ export function setEvaluation(postId, evaluation) {
     });
 }
 
+export function sendNewComment(params) {
+    return instance({
+        method: 'POST',
+        url: '/comments',
+        data: params
+    });
+}
+
 const API = {
     getCommentsByPostId,
     getPostById,
     getPostCategories,
     setEvaluation,
-    getPosts
+    getPosts,
+    sendNewComment
 }
 
 export default API;

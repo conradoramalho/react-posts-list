@@ -6,7 +6,6 @@ function* getCommentsByPostId({ payload }) {
     try {
 
         const { data } = yield call(API.getCommentsByPostId, payload);
-        debugger
         yield put({ type: ACTIONS.COMMENTS_REQUEST_SUCCESS, payload: data });
 
     } catch (error) {
@@ -14,8 +13,20 @@ function* getCommentsByPostId({ payload }) {
     }
 }
 
+function* sendNewComment({ payload }) {
+    try {
+
+        const { data } = yield call(API.sendNewComment, payload);
+        yield put({ type: ACTIONS.COMMENTS_NEW_REQUEST_SUCCESS, payload: data });
+
+    } catch (error) {
+        yield put({ type: ACTIONS.COMMENTS_NEW_REQUEST_FAILURE, payload: error });
+    }
+}
+
 export default function* root() {
     yield all([
-        takeLatest(ACTIONS.COMMENTS_REQUEST, getCommentsByPostId)
+        takeLatest(ACTIONS.COMMENTS_REQUEST, getCommentsByPostId),
+        takeLatest(ACTIONS.COMMENTS_NEW_REQUEST, sendNewComment)
     ])
 }

@@ -25,7 +25,7 @@ class PostList extends Component {
                         posts && (
                             posts.map(post => (
                                 <Grid container key={post.id}>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12}>
                                         <PostCard post={post} />
                                     </Grid>
                                 </Grid>

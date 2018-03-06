@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
@@ -55,25 +55,25 @@ class PostCard extends Component {
         const { post } = this.props;
 
         return (
-            <Link to={`/category/${post.category}/post/${post.id}`}>
-                <div>
-                    {
-                        post &&
-                        <Card key={post.id}>
-                            <CardContent>
+            <section className="post-card">
+                {
+                    post &&
+                    <Card key={post.id}>
+                        <CardContent>
+                            <Link to={`/category/${post.category}/post/${post.id}`}>
                                 <div className="header-card">
-                                    <Grid container>
-                                        <Grid item xs={6}>
-                                            <Typography className="category">{post.category}</Typography>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography className="author">{post.author}</Typography>
-                                        </Grid>
-                                    </Grid>
+                                    <Typography className="title" type="headline" component="h2">
+                                        {post.title}
+                                    </Typography>
                                 </div>
-                                <Typography className="title" type="headline" component="h2">
-                                    {post.title}
-                                </Typography>
+                                <Grid container >
+                                    <Grid item xs={6}>
+                                        <Typography className="category">{post.category}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography className="author">{post.author}</Typography>
+                                    </Grid>
+                                </Grid>
                                 <Grid container wrap="nowrap">
                                     <Grid item xs zeroMinWidth>
                                         <Typography component="p" noWrap>
@@ -81,32 +81,32 @@ class PostCard extends Component {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                            </CardContent>
-                            <CardActions className="card-icons">
-                                <IconButton aria-label="Star" onClick={this.handleOpen}>
-                                    <Typography component="p" noWrap>
-                                        {post.voteScore}
-                                    </Typography>
-                                    <Star />
-                                </IconButton>
-                                <IconButton aria-label="Comments">
-                                    <Typography component="p" noWrap>
-                                        {post.commentCount}
-                                    </Typography>
-                                    <Comment />
-                                </IconButton>
-                                <Typography className="register-date" component="p">
-                                    <Moment format="YYYY/MM/DD" >
-                                        {post.timestamp}
-                                    </Moment>
+                            </Link>
+                        </CardContent>
+                        <CardActions className="card-icons">
+                            <IconButton aria-label="Star" onClick={this.handleOpen}>
+                                <Typography component="p" noWrap>
+                                    {post.voteScore}
                                 </Typography>
-                                <IconButton>
-                                    <Add />
-                                </IconButton>
-                            </CardActions>
-                        </Card>
-                    }
-                </div>
+                                <Star />
+                            </IconButton>
+                            <IconButton aria-label="Comments">
+                                <Typography component="p" noWrap>
+                                    {post.commentCount}
+                                </Typography>
+                                <Comment />
+                            </IconButton>
+                            <Typography className="register-date" component="p">
+                                <Moment format="YYYY/MM/DD" >
+                                    {post.timestamp}
+                                </Moment>
+                            </Typography>
+                            <IconButton>
+                                <Add />
+                            </IconButton>
+                        </CardActions>
+                    </Card>
+                }
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -133,7 +133,7 @@ class PostCard extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-            </Link>
+            </section >
         );
     }
 }

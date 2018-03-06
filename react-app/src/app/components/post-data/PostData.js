@@ -142,7 +142,14 @@ class PostData extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+
+                <section>
+                    <textarea>
+                        Hello there, this is some text in a text area
+                    </textarea>
+                </section>
             </Fragment >
+
         );
     }
 }
