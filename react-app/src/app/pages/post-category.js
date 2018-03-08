@@ -36,7 +36,7 @@ class PostList extends Component {
 
 function mapStateToProps(state) {
     return {
-        posts: state.postsReducer.posts
+        posts: state.categoriesReducer.postsCategory
     }
 }
 

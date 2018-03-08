@@ -28,6 +28,13 @@ export function getPostCategories(category) {
     });
 }
 
+export function getCategories() {
+    return instance({
+        method: 'GET',
+        url: '/categories'
+    });
+}
+
 export function setEvaluation(postId, evaluation) {
     const body = {
         option: evaluation
@@ -54,7 +61,8 @@ const API = {
     getPostCategories,
     setEvaluation,
     getPosts,
-    sendNewComment
+    sendNewComment,
+    getCategories
 }
 
 export default API;

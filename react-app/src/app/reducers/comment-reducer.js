@@ -13,7 +13,13 @@ const commentsReducer = (state = initialState, action) => {
         case ACTIONS.COMMENTS_REQUEST_SUCCESS:
             return { ...state, comments: action.payload, loading: false, error: {} };
         case ACTIONS.COMMENTS_REQUEST_FAILURE:
-            return { ...state, comments: {}, loading: false, error: action.payload };
+            return { ...state, comments: [], loading: false, error: action.payload };
+        case ACTIONS.COMMENTS_NEW_REQUEST:
+            return { ...state, loading: true };
+        case ACTIONS.COMMENTS_NEW_REQUEST_SUCCESS:
+            return { ...state, comments: [...state.comments, action.payload], loading: false, error: {} };
+        case ACTIONS.COMMENTS_NEW_REQUEST_FAILURE:
+            return { ...state, comments: [], loading: false, error: action.payload };
         default:
             return state;
     }

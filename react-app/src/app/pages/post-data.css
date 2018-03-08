@@ -2,6 +2,10 @@
     padding: 20px;
 }
 
+.comments div{
+    margin-bottom: 20px;
+}
+
 .title{
     text-align: center;
 }

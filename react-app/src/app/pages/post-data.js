@@ -25,6 +25,7 @@ class PostData extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+
         const params = {
             timestamp: new Date().getTime(),
             body: event.target.Comments.value,
@@ -33,6 +34,8 @@ class PostData extends Component {
         };
 
         this.props.sendNewComment(params);
+
+        event.target.Comments.value = '';
     }
 
     render() {
@@ -79,10 +82,10 @@ class PostData extends Component {
                         </CardActions>
                     </Paper>
                 </section>
-                <Paper className="post-data" elevation={4}>
+                <Paper className="post-data comments" elevation={4}>
                     {
                         comments.map((comment, index) => (
-                            <Fragment key={index} >
+                            <div key={index} >
                                 <Typography component="p">
                                     {comment.body}
                                 </Typography>
@@ -94,7 +97,7 @@ class PostData extends Component {
                                         {comment.timestamp}
                                     </Moment>
                                 </Typography>
-                            </Fragment>
+                            </div>
                         ))
                     }
                     <form onSubmit={(event) => this.handleSubmit(event)}>
