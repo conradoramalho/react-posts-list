@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
@@ -17,7 +17,7 @@ import Dialog, {
 import './post-card.css';
 import { setPostEvaluation } from '../../actions';
 
-class PostCard extends Component {
+class PostCard extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -147,6 +147,7 @@ PostCard.propTypes = {
     post: PropTypes.shape({
         id: PropTypes.string
     }),
+    setPostEvaluation: PropTypes.func
 }
 
 export default connect('', mapDispatchToProps)(PostCard)

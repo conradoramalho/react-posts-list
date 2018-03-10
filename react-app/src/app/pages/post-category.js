@@ -46,7 +46,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 PostList.propTypes = {
     getPostsCategory: PropTypes.func,
+    getPostCategory: PropTypes.func,
     posts: PropTypes.array,
+    match: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)

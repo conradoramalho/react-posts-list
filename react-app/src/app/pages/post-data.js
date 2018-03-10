@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
@@ -11,7 +12,7 @@ import { sendNewComment, getCommentsByPostId } from '../actions/comment-actions'
 import { CardActions, IconButton, Typography, Paper } from 'material-ui';
 import './post-data.css';
 
-class PostData extends Component {
+class PostData extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -134,5 +135,13 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     getCommentsByPostId,
     sendNewComment
 }, dispatch);
+
+PostData.propTypes = {
+    getPostById: PropTypes.func,
+    getCommentsByPostId: PropTypes.func,
+    sendNewComment: PropTypes.func,
+    match: PropTypes.object,
+    comments: PropTypes.array,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData)

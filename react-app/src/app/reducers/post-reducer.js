@@ -1,32 +1,25 @@
-import {
-    POST_REQUEST,
-    POST_SUCCESS,
-    POST_FAILURE,
-    POST_LIST_REQUEST,
-    POST_LIST_SUCCESS,
-    POST_LIST_FAILURE
-} from '../actions/post-actions'
+import * as ACTIONS from '../actions/post-actions'
 
-const INITIAL_STATE = {
+const initialState = {
     posts: [],
     post: {},
     loading: false,
     error: false,
 };
 
-const postsReducer = (state = INITIAL_STATE, action) => {
+const postsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case POST_LIST_REQUEST:
+        case ACTIONS.POST_LIST_REQUEST:
             return { ...state, loading: true };
-        case POST_LIST_SUCCESS:
+        case ACTIONS.POST_LIST_SUCCESS:
             return { ...state, posts: action.payload, loading: false, error: false };
-        case POST_LIST_FAILURE:
+        case ACTIONS.POST_LIST_FAILURE:
             return { ...state, posts: [], loading: false, error: true };
-        case POST_REQUEST:
+        case ACTIONS.POST_REQUEST:
             return { ...state, loading: true };
-        case POST_SUCCESS:
+        case ACTIONS.POST_SUCCESS:
             return { ...state, post: action.payload, loading: false, error: false };
-        case POST_FAILURE:
+        case ACTIONS.POST_FAILURE:
             return { ...state, post: {}, loading: false, error: true };
         default:
             return state;

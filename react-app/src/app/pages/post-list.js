@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import Header from '../components/header/Header';
 import PostCard from '../components/post-card/post-card'
@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import { getPostList } from '../actions';
 
-class PostList extends Component {
+class PostList extends PureComponent {
     async componentDidMount() {
         await this.props.getPostList();
     }
@@ -51,6 +51,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 PostList.propTypes = {
     requestPostsList: PropTypes.func,
     posts: PropTypes.array,
+    getPostList: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)
