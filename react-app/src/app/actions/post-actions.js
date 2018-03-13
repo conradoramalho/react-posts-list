@@ -23,9 +23,9 @@ export function getPostById(postId) {
     };
 }
 
-export function setPostEvaluation(evaluation) {
+export function setPostEvaluation(params) {
     return {
         type: EVALUATION_POST_REQUEST,
-        payload: evaluation
+        payload: params
     };
 }

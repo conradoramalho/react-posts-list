@@ -21,27 +21,33 @@ const postsReducer = (state = initialState, action) => {
             return { ...state, post: action.payload, loading: false, error: false };
         case ACTIONS.POST_FAILURE:
             return { ...state, post: {}, loading: false, error: true };
+        case ACTIONS.EVALUATION_POST_REQUEST:
+            return { ...state, loading: true };
+        case ACTIONS.EVALUATION_POST_SUCCESS:
+            return setEvaluation(state, action.payload);
+        case ACTIONS.EVALUATION_POST_FAILURE:
+            return { ...state, post: {}, loading: false, error: true };
         default:
             return state;
     }
 }
 
-export default postsReducer;
 
-function setEvaluation(state, { postId, data }) {
+
+function setEvaluation(state, post) {
     const newPosts = state.posts.map((item) => {
-        if (postId !== item.id) {
+        if (post.id !== item.id)
             return item;
-        }
 
         return {
             ...item,
-            ...data
+            ...post
         };
     });
 
     state.posts = newPosts;
 
-    return { ...state };
+    return { ...state, loading: false, error: false };
 }
 
+export default postsReducer;

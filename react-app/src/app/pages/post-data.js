@@ -20,6 +20,7 @@ class PostData extends PureComponent {
     }
 
     componentWillMount() {
+        debugger
         this.props.getPostById(this.props.match.params.postId);
         this.props.getCommentsByPostId(this.props.match.params.postId);
     }

@@ -36,14 +36,12 @@ export function getCategories() {
 }
 
 export function setEvaluation(postId, evaluation) {
-    const body = {
-        option: evaluation
-    };
-
     return instance({
-        method: 'GET',
+        method: 'POST',
         url: `/posts/${postId}`,
-        data: JSON.stringify(body)
+        data: {
+            option: evaluation
+        }
     });
 }
 

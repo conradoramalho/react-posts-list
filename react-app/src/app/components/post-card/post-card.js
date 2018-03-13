@@ -25,14 +25,23 @@ class PostCard extends PureComponent {
             open: false,
             evaluation: 0
         };
+
+        this.handleDown = this.handleDown.bind(this);
+        this.handleUp = this.handleUp.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleDown = () => {
         this.setState({ evaluation: 'downVote' });
+        this.props.setPostEvaluation({ postId: this.props.post.id, evaluation: 'downVote' });
+        this.setState({ open: false });
     }
 
     handleUp = () => {
         this.setState({ evaluation: 'upVote' });
+        this.props.setPostEvaluation({ postId: this.props.post.id, evaluation: 'upVote' });
+        this.setState({ open: false });
     }
 
     handleOpen = () => {
@@ -41,14 +50,6 @@ class PostCard extends PureComponent {
 
     handleClose = () => {
         this.setState({ open: false, evaluation: '' });
-    }
-
-    handleSave = () => {
-        const evaluation = this.state.evaluation;
-        if (evaluation) {
-            this.props.setPostEvaluation(this.props.post.id, evaluation);
-            this.setState({ open: false });
-        }
     }
 
     render() {
@@ -60,7 +61,7 @@ class PostCard extends PureComponent {
                     post &&
                     <Card key={post.id}>
                         <CardContent>
-                            <Link to={`/category/${post.category}/post/${post.id}`}>
+                            <Link to={`/category/${post.category}/posts/${post.id}`}>
                                 <div className="header-card">
                                     <Typography className="title" type="headline" component="h2">
                                         {post.title}
@@ -127,9 +128,6 @@ class PostCard extends PureComponent {
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
-                        </Button>
-                        <Button onClick={this.handleSave} color="primary">
-                            Save
                         </Button>
                     </DialogActions>
                 </Dialog>
