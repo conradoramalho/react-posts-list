@@ -53,6 +53,17 @@ export function sendNewComment(params) {
     });
 }
 
+export function updateComment({ id, body }) {
+    return instance({
+        method: 'PUT',
+        url: `/comments/${id}`,
+        data: {
+            timestamp: new Date().getTime(),
+            body
+        }
+    });
+}
+
 const API = {
     getCommentsByPostId,
     getPostById,
@@ -60,7 +71,8 @@ const API = {
     setEvaluation,
     getPosts,
     sendNewComment,
-    getCategories
+    getCategories,
+    updateComment
 }
 
 export default API;

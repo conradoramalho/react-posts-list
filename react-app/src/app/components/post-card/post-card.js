@@ -7,12 +7,6 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { Add, Star, ThumbDown, ThumbUp, Comment } from 'material-ui-icons';
-import Dialog, {
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from 'material-ui/Dialog';
 
 import './post-card.css';
 import { setPostEvaluation } from '../../actions';
@@ -61,7 +55,7 @@ class PostCard extends PureComponent {
                     post &&
                     <Card key={post.id}>
                         <CardContent>
-                            <Link to={`/category/${post.category}/posts/${post.id}`}>
+                            <Link to={`/categories/${post.category}/posts/${post.id}`}>
                                 <div className="header-card">
                                     <Typography className="title" type="headline" component="h2">
                                         {post.title}
@@ -108,29 +102,6 @@ class PostCard extends PureComponent {
                         </CardActions>
                     </Card>
                 }
-                <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Evaluation</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Set an evaluation about this post.
-                        </DialogContentText>
-                        <IconButton aria-label="thumb_down" onClick={this.handleDown}>
-                            <ThumbDown />
-                        </IconButton>
-                        <IconButton aria-label="Star" onClick={this.handleUp}>
-                            <ThumbUp />
-                        </IconButton>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </Dialog>
             </section >
         );
     }

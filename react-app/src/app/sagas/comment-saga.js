@@ -24,9 +24,20 @@ function* sendNewComment({ payload }) {
     }
 }
 
+function* updateComment({ payload }) {
+    try {
+        const { data } = yield call(API.updateComment, payload);
+        yield put({ type: ACTIONS.UPDATE_COMMENTS_REQUEST_SUCCESS, payload: data });
+
+    } catch (error) {
+        yield put({ type: ACTIONS.UPDATE_COMMENTS_REQUEST_FAILURE, payload: error });
+    }
+}
+
 export default function* root() {
     yield all([
         takeLatest(ACTIONS.COMMENTS_REQUEST, getCommentsByPostId),
-        takeLatest(ACTIONS.COMMENTS_NEW_REQUEST, sendNewComment)
+        takeLatest(ACTIONS.COMMENTS_NEW_REQUEST, sendNewComment),
+        takeLatest(ACTIONS.UPDATE_COMMENTS_REQUEST, updateComment),
     ])
 }

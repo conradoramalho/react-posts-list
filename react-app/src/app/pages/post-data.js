@@ -8,19 +8,36 @@ import TextField from 'material-ui/TextField';
 import Header from "../components/header/Header";
 import { getPostById } from '../actions/post-actions';
 import { Add, Star, Comment, Send } from 'material-ui-icons';
-import { sendNewComment, getCommentsByPostId } from '../actions/comment-actions';
+import { sendNewComment, getCommentsByPostId, updateComment } from '../actions/comment-actions';
 import { CardActions, IconButton, Typography, Paper } from 'material-ui';
+import Dialog, {
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from 'material-ui/Dialog';
+
+import EditComment from '../components/comment/edit-comment';
+
 import './post-data.css';
 
 class PostData extends PureComponent {
     constructor(props) {
         super(props);
 
+        this.state = {
+            open: false,
+            editComment: {}
+        }
+
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onEditComment = this.onEditComment.bind(this);
+        this.setEditComment = this.setEditComment.bind(this);
+        this.onEditSave = this.onEditSave.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     componentWillMount() {
-        debugger
         this.props.getPostById(this.props.match.params.postId);
         this.props.getCommentsByPostId(this.props.match.params.postId);
     }
@@ -38,6 +55,23 @@ class PostData extends PureComponent {
         this.props.sendNewComment(params);
 
         event.target.Comments.value = '';
+    }
+
+    setEditComment(comment) {
+        this.setState({ open: true, editComment: comment });
+    }
+
+    onEditComment(text) {
+        this.setState((state) => ({ ...state, editComment: { ...state.editComment, body: text } }));
+    }
+
+    onEditSave() {
+        this.props.updateComment(this.state.editComment);
+        this.setState({ open: false, editComment: {} });
+    }
+
+    handleClose() {
+        this.setState({ open: false, editComment: {} });
     }
 
     render() {
@@ -99,6 +133,7 @@ class PostData extends PureComponent {
                                         {comment.timestamp}
                                     </Moment>
                                 </Typography>
+                                <button onClick={() => this.setEditComment(comment)}>edit</button>
                             </div>
                         ))
                     }
@@ -119,6 +154,13 @@ class PostData extends PureComponent {
                         </Button>
                     </form>
                 </Paper>
+                <EditComment
+                    open={this.state.open}
+                    comment={this.state.editComment}
+                    onEdit={this.onEditComment}
+                    onEditSave={this.onEditSave}
+                    handleClose={this.handleClose}
+                />
             </Fragment>
         )
     }
@@ -134,7 +176,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     getPostById,
     getCommentsByPostId,
-    sendNewComment
+    sendNewComment,
+    updateComment
 }, dispatch);
 
 PostData.propTypes = {

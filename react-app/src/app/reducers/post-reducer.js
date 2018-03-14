@@ -32,8 +32,6 @@ const postsReducer = (state = initialState, action) => {
     }
 }
 
-
-
 function setEvaluation(state, post) {
     const newPosts = state.posts.map((item) => {
         if (post.id !== item.id)

@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import Comment from './Comment'
 
 class CommentList extends Component {
-    componentWillMount(){
+    componentWillMount() {
         this.props.getComments(this.props.postId);
-    }  
+    }
 
     render() {
         return (
             <div>
                 {
                     comments.map(comment => (
-                        <Comment key={comment.id} comment={comment}/>
+                        <Comment key={comment.id} comment={comment} />
                     ))
                 }
             </div>
