@@ -32,20 +32,10 @@ const postsReducer = (state = initialState, action) => {
     }
 }
 
-function setEvaluation(state, post) {
-    const newPosts = state.posts.map((item) => {
-        if (post.id !== item.id)
-            return item;
+const setEvaluation = (state, post) => {
+    const posts = state.posts.filter(item => item.id !== post.id);
 
-        return {
-            ...item,
-            ...post
-        };
-    });
-
-    state.posts = newPosts;
-
-    return { ...state, loading: false, error: false };
+    return { ...state, posts: [...posts, post], loading: false, error: false };
 }
 
 export default postsReducer;

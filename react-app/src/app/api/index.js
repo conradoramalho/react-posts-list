@@ -70,6 +70,7 @@ export function savePost(data) {
         url: `/posts`,
         data: {
             ...data,
+            id: Math.random().toString(36).substring(2, 15),
             author: 'Conrado Ramalho',
             timestamp: new Date().getTime()
         }

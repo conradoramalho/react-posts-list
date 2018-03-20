@@ -43,8 +43,8 @@ class PostList extends PureComponent {
                     </Grid>
                     {
                         posts && (
-                            posts.map(post => (
-                                <Grid container key={post.id}>
+                            posts.map((post, index) => (
+                                <Grid container key={index}>
                                     <Grid item xs={12}>
                                         <PostCard post={post} />
                                     </Grid>

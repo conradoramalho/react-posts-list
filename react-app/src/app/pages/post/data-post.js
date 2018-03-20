@@ -15,27 +15,17 @@ import EditComment from '../../components/comment/edit-comment';
 import './data-post.css';
 
 class PostData extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            open: false,
-            editComment: {}
-        }
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onEditComment = this.onEditComment.bind(this);
-        this.setEditComment = this.setEditComment.bind(this);
-        this.onEditSave = this.onEditSave.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+    state = {
+        open: false,
+        editComment: {}
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getPostById(this.props.match.params.postId);
         this.props.getCommentsByPostId(this.props.match.params.postId);
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
 
         const params = {
@@ -50,20 +40,20 @@ class PostData extends PureComponent {
         event.target.Comments.value = '';
     }
 
-    setEditComment(comment) {
+    setEditComment = (comment) => {
         this.setState({ open: true, editComment: comment });
     }
 
-    onEditComment(text) {
+    onEditComment = (text) => {
         this.setState((state) => ({ ...state, editComment: { ...state.editComment, body: text } }));
     }
 
-    onEditSave() {
+    onEditSave = () => {
         this.props.updateComment(this.state.editComment);
         this.setState({ open: false, editComment: {} });
     }
 
-    handleClose() {
+    handleClose = () => {
         this.setState({ open: false, editComment: {} });
     }
 
@@ -179,6 +169,7 @@ PostData.propTypes = {
     sendNewComment: PropTypes.func,
     match: PropTypes.object,
     comments: PropTypes.array,
+    updateComment: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData)

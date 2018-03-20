@@ -12,19 +12,10 @@ import './post-card.css';
 import { setPostEvaluation } from '../../actions';
 
 class PostCard extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            open: false,
-            evaluation: 0
-        };
-
-        this.handleDown = this.handleDown.bind(this);
-        this.handleUp = this.handleUp.bind(this);
-        this.handleOpen = this.handleOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-    }
+    state = {
+        open: false,
+        evaluation: 0
+    };
 
     handleDown = () => {
         this.setState({ evaluation: 'downVote' });
