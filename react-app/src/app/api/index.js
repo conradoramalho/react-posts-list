@@ -64,6 +64,18 @@ export function updateComment({ id, body }) {
     });
 }
 
+export function savePost(data) {
+    return instance({
+        method: 'POST',
+        url: `/posts`,
+        data: {
+            ...data,
+            author: 'Conrado Ramalho',
+            timestamp: new Date().getTime()
+        }
+    });
+}
+
 const API = {
     getCommentsByPostId,
     getPostById,
@@ -72,7 +84,8 @@ const API = {
     getPosts,
     sendNewComment,
     getCategories,
-    updateComment
+    updateComment,
+    savePost
 }
 
 export default API;
