@@ -1,0 +1,8 @@
+.btn-add{
+  position: fixed !important;
+  right: 20px;
+  bottom: 20px;
+}
+.btn-add svg{
+  color: #fff !important;
+}

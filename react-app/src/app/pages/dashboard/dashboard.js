@@ -1,13 +1,14 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Header from '../components/header/Header';
-import PostCard from '../components/post-card/post-card'
-import Grid from 'material-ui/Grid';
-import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import { Button } from 'material-ui';
-import { getPostList, getCategoryList } from '../actions';
+import { bindActionCreators } from "redux";
+import { Button, Grid } from 'material-ui';
+import AddIcon from 'material-ui-icons/Add';
+import Header from '../../components/header/Header';
+import PostCard from '../../components/post-card/post-card'
+import { getPostList, getCategoryList } from '../../actions';
+import './dashboard.css';
 
 class PostList extends PureComponent {
     componentDidMount() {
@@ -52,6 +53,11 @@ class PostList extends PureComponent {
                             ))
                     }
                 </Grid>
+                <Link to="/posts/new">
+                    <Button variant="fab" color="primary" aria-label="add" className="btn-add">
+                        <AddIcon />
+                    </Button>
+                </Link>
             </Fragment>
         )
     }

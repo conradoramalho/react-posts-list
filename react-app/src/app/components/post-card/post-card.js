@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
-import { Grid, Button, IconButton, Typography } from 'material-ui';
+import { Grid, IconButton, Typography } from 'material-ui';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { Add, Star, ThumbDown, ThumbUp, Comment } from 'material-ui-icons';
+import { Add, Star, Comment } from 'material-ui-icons';
 
 import './post-card.css';
 import { setPostEvaluation } from '../../actions';

@@ -5,21 +5,14 @@ import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import { bindActionCreators } from "redux";
 import TextField from 'material-ui/TextField';
-import Header from "../components/header/Header";
-import { getPostById } from '../actions/post-actions';
-import { Add, Star, Comment, Send } from 'material-ui-icons';
-import { sendNewComment, getCommentsByPostId, updateComment } from '../actions/comment-actions';
 import { CardActions, IconButton, Typography, Paper } from 'material-ui';
-import Dialog, {
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from 'material-ui/Dialog';
+import { Add, Star, Comment, Send } from 'material-ui-icons';
+import { sendNewComment, getCommentsByPostId, updateComment } from '../../actions/comment-actions';
+import Header from "../../components/header/Header";
+import { getPostById } from '../../actions/post-actions';
+import EditComment from '../../components/comment/edit-comment';
 
-import EditComment from '../components/comment/edit-comment';
-
-import './post-data.css';
+import './data-post.css';
 
 class PostData extends PureComponent {
     constructor(props) {
