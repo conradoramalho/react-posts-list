@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
@@ -58,93 +59,98 @@ class PostData extends PureComponent {
     }
 
     render() {
-        const { post, comments } = this.props;
+        const { post, comments, hasPost } = this.props;
 
         return (
-            <Fragment>
-                <section>
-                    <Header title='List of posts' />
-                    <Paper className="post-data" elevation={4}>
-                        <Typography className="title" variant="headline" component="h1">
-                            {post.title}
-                        </Typography>
-                        <Typography className="author" component="h4">
-                            {post.author}
-                        </Typography>
-                        <Typography className="category" component="h4">
-                            {post.category}
-                        </Typography>
-                        <Typography className="body" component="p">
-                            {post.body}
-                        </Typography>
-                        <CardActions className="card-icons">
-                            <IconButton aria-label="Star" onClick={this.handleOpen}>
-                                <Typography component="p" noWrap>
-                                    {post.voteScore}
+            !hasPost ?
+                (<Redirect to='/404' />) :
+                (
+
+                    <Fragment>
+                        <section>
+                            <Header title='List of posts' />
+                            <Paper className="post-data" elevation={4}>
+                                <Typography className="title" variant="headline" component="h1">
+                                    {post.title}
                                 </Typography>
-                                <Star />
-                            </IconButton>
-                            <IconButton aria-label="Comments">
-                                <Typography component="p" noWrap>
-                                    {post.commentCount}
+                                <Typography className="author" component="h4">
+                                    {post.author}
                                 </Typography>
-                                <Comment />
-                            </IconButton>
-                            <Typography className="register-date" component="p">
-                                <Moment format="DD/MM/YYYY" >
-                                    {post.timestamp}
-                                </Moment>
-                            </Typography>
-                            <IconButton>
-                                <Add />
-                            </IconButton>
-                        </CardActions>
-                    </Paper>
-                </section>
-                <Paper className="post-data comments" elevation={4}>
-                    {
-                        comments.map((comment, index) => (
-                            <div key={index} >
-                                <Typography component="p">
-                                    {comment.body}
+                                <Typography className="category" component="h4">
+                                    {post.category}
                                 </Typography>
-                                <Typography component="p">
-                                    {comment.author}
+                                <Typography className="body" component="p">
+                                    {post.body}
                                 </Typography>
-                                <Typography component="p">
-                                    <Moment format="DD/MM/YYYY" >
-                                        {comment.timestamp}
-                                    </Moment>
-                                </Typography>
-                                <button onClick={() => this.setEditComment(comment)}>edit</button>
-                            </div>
-                        ))
-                    }
-                    <form onSubmit={(event) => this.handleSubmit(event)}>
-                        <TextField
-                            id="Comments"
-                            label="Comments"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            placeholder="Write a comment!"
-                            fullWidth
-                            margin="normal"
+                                <CardActions className="card-icons">
+                                    <IconButton aria-label="Star" onClick={this.handleOpen}>
+                                        <Typography component="p" noWrap>
+                                            {post.voteScore}
+                                        </Typography>
+                                        <Star />
+                                    </IconButton>
+                                    <IconButton aria-label="Comments">
+                                        <Typography component="p" noWrap>
+                                            {post.commentCount}
+                                        </Typography>
+                                        <Comment />
+                                    </IconButton>
+                                    <Typography className="register-date" component="p">
+                                        <Moment format="DD/MM/YYYY" >
+                                            {post.timestamp}
+                                        </Moment>
+                                    </Typography>
+                                    <IconButton>
+                                        <Add />
+                                    </IconButton>
+                                </CardActions>
+                            </Paper>
+                        </section>
+                        <Paper className="post-data comments" elevation={4}>
+                            {
+                                comments.map((comment, index) => (
+                                    <div key={index} >
+                                        <Typography component="p">
+                                            {comment.body}
+                                        </Typography>
+                                        <Typography component="p">
+                                            {comment.author}
+                                        </Typography>
+                                        <Typography component="p">
+                                            <Moment format="DD/MM/YYYY" >
+                                                {comment.timestamp}
+                                            </Moment>
+                                        </Typography>
+                                        <button onClick={() => this.setEditComment(comment)}>edit</button>
+                                    </div>
+                                ))
+                            }
+                            <form onSubmit={(event) => this.handleSubmit(event)}>
+                                <TextField
+                                    id="Comments"
+                                    label="Comments"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    placeholder="Write a comment!"
+                                    fullWidth
+                                    margin="normal"
+                                />
+                                <Button variant="raised" color="primary" type="submit">
+                                    Send
+                    <Send color="primary" />
+                                </Button>
+                            </form>
+                        </Paper>
+                        <EditComment
+                            open={this.state.open}
+                            comment={this.state.editComment}
+                            onEdit={this.onEditComment}
+                            onEditSave={this.onEditSave}
+                            handleClose={this.handleClose}
                         />
-                        <Button variant="raised" color="primary" type="submit">
-                            Send
-                        <Send color="primary" />
-                        </Button>
-                    </form>
-                </Paper>
-                <EditComment
-                    open={this.state.open}
-                    comment={this.state.editComment}
-                    onEdit={this.onEditComment}
-                    onEditSave={this.onEditSave}
-                    handleClose={this.handleClose}
-                />
-            </Fragment>
+                    </Fragment>
+                )
         )
     }
 }
@@ -152,7 +158,8 @@ class PostData extends PureComponent {
 function mapStateToProps(state) {
     return {
         post: state.postsReducer.post,
-        comments: state.commentsReducer.comments
+        comments: state.commentsReducer.comments,
+        hasPost: state.postsReducer.hasPost
     }
 }
 
@@ -164,12 +171,14 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
 PostData.propTypes = {
+    post: PropTypes.object,
     getPostById: PropTypes.func,
     getCommentsByPostId: PropTypes.func,
     sendNewComment: PropTypes.func,
     match: PropTypes.object,
     comments: PropTypes.array,
-    updateComment: PropTypes.func
+    updateComment: PropTypes.func,
+    hasPost: PropTypes.bool,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData)
