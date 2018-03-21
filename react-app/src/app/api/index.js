@@ -1,81 +1,88 @@
 import instance from './api.config';
 
-function getCommentsByPostId(postId) {
-    return instance({
+const getCommentsByPostId = (postId) => (
+    instance({
         method: 'GET',
         url: `/posts/${postId}/comments`,
-    });
-}
+    })
+)
 
-export function getPostById(postId) {
-    return instance({
+const getPostById = (postId) => (
+    instance({
         method: 'GET',
         url: `/posts/${postId}`
-    });
-}
+    })
+);
 
-function getPosts() {
-    return instance({
+const getPosts = () => (
+    instance({
         method: 'GET',
         url: '/posts'
-    });
-}
+    })
+);
 
-export function getPostCategories(category) {
-    return instance({
+const getPostCategories = (category) => (
+    instance({
         method: 'GET',
         url: `/${category}/posts`
-    });
-}
+    })
+);
 
-export function getCategories() {
-    return instance({
+const getCategories = () => (
+    instance({
         method: 'GET',
         url: '/categories'
-    });
-}
+    })
+);
 
-export function setEvaluation(postId, evaluation) {
-    return instance({
+const setEvaluation = (postId, evaluation) => (
+    instance({
         method: 'POST',
         url: `/posts/${postId}`,
         data: {
             option: evaluation
         }
-    });
-}
+    })
+);
 
-export function sendNewComment(params) {
-    return instance({
+const sendNewComment = (params) => (
+    instance({
         method: 'POST',
         url: '/comments',
         data: params
-    });
-}
+    })
+);
 
-export function updateComment({ id, body }) {
-    return instance({
+const updateComment = ({ id, body }) => (
+    instance({
         method: 'PUT',
         url: `/comments/${id}`,
         data: {
             timestamp: new Date().getTime(),
             body
         }
-    });
-}
+    })
+);
 
-export function savePost(data) {
-    return instance({
+const savePost = (data) => (
+    instance({
         method: 'POST',
-        url: `/posts`,
+        url: '/posts',
         data: {
             ...data,
             id: Math.random().toString(36).substring(2, 15),
             author: 'Conrado Ramalho',
             timestamp: new Date().getTime()
         }
-    });
-}
+    })
+);
+
+const deletePost = (postId) => (
+    instance({
+        method: 'DELETE',
+        url: `/posts/${postId}`
+    })
+);
 
 const API = {
     getCommentsByPostId,
@@ -86,7 +93,8 @@ const API = {
     sendNewComment,
     getCategories,
     updateComment,
-    savePost
-}
+    savePost,
+    deletePost
+};
 
 export default API;

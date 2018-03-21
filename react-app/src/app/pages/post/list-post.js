@@ -38,9 +38,9 @@ class PostList extends PureComponent {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
-        posts: state.postsReducer.posts
+        posts: state.postsReducer.posts.filter(x => !x.deleted)
     }
 }
 

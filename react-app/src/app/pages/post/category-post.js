@@ -36,7 +36,7 @@ class PostList extends Component {
 
 function mapStateToProps(state) {
     return {
-        posts: state.categoriesReducer.postsCategory
+        posts: state.categoriesReducer.postsCategory.filter(x => !x.deleted)
     }
 }
 

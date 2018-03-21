@@ -14,6 +14,10 @@ export const SAVE_POST_REQUEST = 'SAVE_POST_REQUEST'
 export const SAVE_POST_SUCCESS = 'SAVE_POST_SUCCESS'
 export const SAVE_POST_FAILURE = 'SAVE_POST_FAILURE'
 
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST'
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
+
 export function getPostList() {
     return {
         type: POST_LIST_REQUEST
@@ -37,6 +41,13 @@ export function setPostEvaluation(params) {
 export function savePost(params) {
     return {
         type: SAVE_POST_REQUEST,
+        payload: params
+    };
+}
+
+export function deletePost(params) {
+    return {
+        type: DELETE_POST_REQUEST,
         payload: params
     };
 }

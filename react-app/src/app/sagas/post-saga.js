@@ -56,11 +56,25 @@ function* savePost({ payload }) {
     }
 }
 
+function* deletePost({ payload }) {
+    try {
+        const { data } = yield call(API.deletePost, payload);
+
+        yield put({ type: ACTIONS.DELETE_POST_SUCCESS, payload: data });
+
+    } catch (error) {
+
+        yield put({ type: ACTIONS.DELETE_POST_FAILURE, payload: error });
+
+    }
+}
+
 export default function* root() {
     yield all([
         takeLatest(ACTIONS.POST_LIST_REQUEST, getPostList),
         takeLatest(ACTIONS.POST_REQUEST, getPostById),
         takeLatest(ACTIONS.EVALUATION_POST_REQUEST, setPostEvaluation),
         takeLatest(ACTIONS.SAVE_POST_REQUEST, savePost),
+        takeLatest(ACTIONS.DELETE_POST_REQUEST, deletePost),
     ]);
 }

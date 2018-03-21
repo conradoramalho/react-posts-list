@@ -21,10 +21,16 @@ const postsReducer = (state = initialState, action) => {
             return { ...state, post: action.payload, loading: false, error: false };
         case ACTIONS.POST_FAILURE:
             return { ...state, post: {}, loading: false, error: true };
+        case ACTIONS.DELETE_POST_REQUEST:
+            return { ...state, loading: true };
+        case ACTIONS.DELETE_POST_SUCCESS:
+            return updatePost(state, action.payload);
+        case ACTIONS.DELETE_POST_FAILURE:
+            return { ...state, loading: false, error: true };
         case ACTIONS.EVALUATION_POST_REQUEST:
             return { ...state, loading: true };
         case ACTIONS.EVALUATION_POST_SUCCESS:
-            return setEvaluation(state, action.payload);
+            return updatePost(state, action.payload);
         case ACTIONS.EVALUATION_POST_FAILURE:
             return { ...state, post: {}, loading: false, error: true };
         default:
@@ -32,7 +38,7 @@ const postsReducer = (state = initialState, action) => {
     }
 }
 
-const setEvaluation = (state, post) => {
+const updatePost = (state, post) => {
     const posts = state.posts.filter(item => item.id !== post.id);
 
     return { ...state, posts: [...posts, post], loading: false, error: false };
