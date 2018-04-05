@@ -8,50 +8,50 @@ import { connect } from 'react-redux';
 import { getPostList } from '../../actions';
 
 class PostList extends PureComponent {
-    async componentDidMount() {
-        await this.props.getPostList();
-    }
+  async componentDidMount() {
+    await this.props.getPostList();
+  }
 
-    render() {
-        const { posts } = this.props;
+  render() {
+    const { posts } = this.props;
 
-        return (
-            <div>
-                <Grid container spacing={24}>
-                    <Grid item xs={12}>
-                        <Header title='List of posts' />
-                    </Grid>
-                    {
-                        posts && (
-                            posts.map(post => (
-                                <Grid container key={post.id}>
-                                    <Grid item xs={12}>
-                                        <PostCard post={post} />
-                                    </Grid>
-                                </Grid>
-                            )
-                            ))
-                    }
+    return (
+      <div>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Header title='List of posts' />
+          </Grid>
+          {
+            posts && (
+              posts.map(post => (
+                <Grid container key={post.id}>
+                  <Grid item xs={12}>
+                    <PostCard post={post} />
+                  </Grid>
                 </Grid>
-            </div>
-        )
-    }
+              )
+              ))
+          }
+        </Grid>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        posts: state.postsReducer.posts.filter(x => !x.deleted)
-    }
+  return {
+    posts: state.postsReducer.posts.filter(x => !x.deleted)
+  }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostList
+  getPostList
 }, dispatch);
 
 PostList.propTypes = {
-    requestPostsList: PropTypes.func,
-    posts: PropTypes.array,
-    getPostList: PropTypes.func
+  requestPostsList: PropTypes.func,
+  posts: PropTypes.array,
+  getPostList: PropTypes.func
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)

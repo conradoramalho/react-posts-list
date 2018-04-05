@@ -50,7 +50,7 @@ class PostCard extends PureComponent {
           post &&
           <Card key={post.id}>
             <CardContent>
-              <Link to={`/categories/${post.category}/posts/${post.id}`}>
+              <Link to={`/${post.category}/${post.id}`}>
                 <div className="header-card">
                   <Typography className="title" type="headline" component="h2">
                     {post.title}

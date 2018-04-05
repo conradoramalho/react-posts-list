@@ -8,47 +8,47 @@ import PostCard from '../../components/post-card/post-card'
 import { getPostCategory } from '../../actions';
 
 class PostList extends Component {
-    componentDidMount() {
-        this.props.getPostCategory(this.props.match.params.category);
-    }
+  componentDidMount() {
+    this.props.getPostCategory(this.props.match.params.category);
+  }
 
-    render() {
-        return (
-            <div>
-                <Grid container spacing={24}>
-                    <Grid item xs={12}>
-                        <Header title='List of posts' />
-                    </Grid>
-                    {
-                        this.props.posts && this.props.posts.map(post => (
-                            <Grid container key={post.id}>
-                                <Grid item xs={6}>
-                                    <PostCard post={post} />
-                                </Grid>
-                            </Grid>
-                        ))
-                    }
+  render() {
+    return (
+      <div>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Header title='List of posts' />
+          </Grid>
+          {
+            this.props.posts && this.props.posts.map(post => (
+              <Grid container key={post.id}>
+                <Grid item xs={6}>
+                  <PostCard post={post} />
                 </Grid>
-            </div>
-        )
-    }
+              </Grid>
+            ))
+          }
+        </Grid>
+      </div>
+    )
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        posts: state.categoriesReducer.postsCategory.filter(x => !x.deleted)
-    }
+  return {
+    posts: state.categoriesReducer.postsCategory.filter(x => !x.deleted)
+  }
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getPostCategory
+  getPostCategory
 }, dispatch);
 
 PostList.propTypes = {
-    getPostsCategory: PropTypes.func,
-    getPostCategory: PropTypes.func,
-    posts: PropTypes.array,
-    match: PropTypes.object
+  getPostsCategory: PropTypes.func,
+  getPostCategory: PropTypes.func,
+  posts: PropTypes.array,
+  match: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)
