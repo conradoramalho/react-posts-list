@@ -40,9 +40,8 @@ const postsReducer = (state = initialState, action) => {
 }
 
 const updatePost = (state, post) => {
-    const posts = state.posts.filter(item => item.id !== post.id);
-
-    return { ...state, posts: [...posts, post], loading: false, error: false };
+    const posts = state.posts.map(item => (item.id === post.id) ? { ...item, ...post } : item);
+    return { ...state, posts, loading: false, error: false };
 }
 
 const verifyPost = (state, post) => {

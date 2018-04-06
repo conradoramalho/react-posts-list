@@ -1,49 +1,85 @@
 import React, { PureComponent } from 'react';
-import './Header.css';
 import { connect } from 'react-redux';
-import Typography from 'material-ui/Typography';
 import { Button, Grid } from 'material-ui';
+import PropTypes from 'prop-types';
 import { getCategoryList } from '../../actions';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import styled from 'styled-components';
+import './Header.css';
+
+const Title = styled.h1`
+  font-size: 1.2em;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase
+`;
+
+const Category = styled.div`
+  font-size: 1em;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #fff;  
+  h1{
+    font-size: 0.8em;
+  }
+`;
 
 class Header extends PureComponent {
-    render() {
-        const { categories, title } = this.props;
+  static propTypes = {
+    getCategoryList: PropTypes.func,
+    categories: PropTypes.array,
+    title: PropTypes.string,
+    match: PropTypes.object
+  };
 
-        return (
-            <div className="header" >
-                <Grid container spacing={24}>
-                    <Grid item xs={12}>
-                        <Header title='List of categories' />
-                    </Grid>
-                    {
-                        categories && (
-                            categories.map((category, index) => (
-                                <Link key={index} to={`categories/${category.path}`}>
-                                    <Button color="primary">
-                                        {category.name}
-                                    </Button>
-                                </Link>
-                            )
-                            ))
-                    }
-                </Grid>
-                <Typography className="title-header" type="headline" component="h2">
-                    {title}
-                </Typography>
-            </div>
-        )
-    }
+  componentDidMount() {
+    this.props.getCategoryList();
+  }
+
+  render() {
+
+    const { title, match: { params } } = this.props;
+    const categories = this.props.categories.filter(category => category.path !== params.category);
+
+    return (
+      <div className="header" >
+        <Category>
+          <Title>
+            Categorias
+          </Title>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              {
+                categories && (
+                  categories.map((category, index) => (
+                    <Link key={index} to={`/category/${category.path}`}>
+                      <Button color="secondary">
+                        {category.name}
+                      </Button>
+                    </Link>
+                  )
+                  ))
+              }
+            </Grid>
+          </Grid>
+        </Category>
+        <Title>
+          {title}
+        </Title>
+      </div>
+    )
+  }
 }
 
-
-
 const mapStateToProps = (state) => ({
-    categories: state.categoriesReducer.categories
+  categories: state.categoriesReducer.categories
 });
 
 const mapDispatchToProps = {
-    getCategoryList
+  getCategoryList
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

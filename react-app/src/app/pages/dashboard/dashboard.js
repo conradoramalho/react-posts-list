@@ -7,13 +7,12 @@ import { Button, Grid } from 'material-ui';
 import AddIcon from 'material-ui-icons/Add';
 import Header from '../../components/header/Header';
 import PostCard from '../../components/post-card/post-card'
-import { getPostList } from '../../actions';
+import { getPostList, getCategoryList } from '../../actions';
 import './dashboard.css';
 
 class PostList extends PureComponent {
   componentDidMount() {
     this.props.getPostList();
-    this.props.getCategoryList();
   }
 
   render() {
@@ -54,7 +53,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPostList
+  getPostList,
+  getCategoryList
 }, dispatch);
 
 PostList.propTypes = {

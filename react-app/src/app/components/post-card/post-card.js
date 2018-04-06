@@ -3,39 +3,22 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import { Grid, IconButton, Typography } from 'material-ui';
-import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { Delete, Star, Comment } from 'material-ui-icons';
+import { Delete, Comment } from 'material-ui-icons';
+import Evaluation from '../evaluation/evaluation';
 
 import './post-card.css';
-import { setPostEvaluation, deletePost } from '../../actions';
+import { deletePost } from '../../actions';
 
 class PostCard extends PureComponent {
-  state = {
-    open: false,
-    evaluation: 0
+  static propTypes = {
+    setEvaluation: PropTypes.func,
+    post: PropTypes.shape({
+      id: PropTypes.string
+    }),
+    deletePost: PropTypes.func,
   };
-
-  handleDown = () => {
-    this.setState({ evaluation: 'downVote' });
-    this.props.setPostEvaluation({ postId: this.props.post.id, evaluation: 'downVote' });
-    this.setState({ open: false });
-  }
-
-  handleUp = () => {
-    this.setState({ evaluation: 'upVote' });
-    this.props.setPostEvaluation({ postId: this.props.post.id, evaluation: 'upVote' });
-    this.setState({ open: false });
-  }
-
-  handleOpen = () => {
-    this.setState({ open: true });
-  }
-
-  handleClose = () => {
-    this.setState({ open: false, evaluation: '' });
-  }
 
   deletePost = () => {
     this.props.deletePost(this.props.post.id);
@@ -74,12 +57,7 @@ class PostCard extends PureComponent {
               </Link>
             </CardContent>
             <CardActions className="card-icons">
-              <IconButton aria-label="Star" onClick={this.handleOpen}>
-                <Typography component="p" noWrap>
-                  {post.voteScore}
-                </Typography>
-                <Star />
-              </IconButton>
+              <Evaluation postId={post.id} voteScore={post.voteScore} />
               <IconButton aria-label="Comments">
                 <Typography component="p" noWrap>
                   {post.commentCount}
@@ -102,18 +80,8 @@ class PostCard extends PureComponent {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  setPostEvaluation,
+const mapDispatchToProps = {
   deletePost
-}, dispatch);
+};
 
-PostCard.propTypes = {
-  setEvaluation: PropTypes.func,
-  post: PropTypes.shape({
-    id: PropTypes.string
-  }),
-  setPostEvaluation: PropTypes.func,
-  deletePost: PropTypes.func,
-}
-
-export default connect('', mapDispatchToProps)(PostCard)
+export default connect('', mapDispatchToProps)(PostCard);
