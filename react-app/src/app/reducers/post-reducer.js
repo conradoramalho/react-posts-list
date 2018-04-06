@@ -19,7 +19,7 @@ const postsReducer = (state = initialState, action) => {
         case ACTIONS.POST_REQUEST:
             return { ...state, loading: true };
         case ACTIONS.POST_SUCCESS:
-            return verifyPost(state, action.payload);
+            return { ...state, post: action.payload, loading: false };
         case ACTIONS.POST_FAILURE:
             return { ...state, post: {}, loading: false, error: true };
         case ACTIONS.DELETE_POST_REQUEST:
@@ -40,14 +40,11 @@ const postsReducer = (state = initialState, action) => {
 }
 
 const updatePost = (state, post) => {
-    const posts = state.posts.map(item => (item.id === post.id) ? { ...item, ...post } : item);
-    return { ...state, posts, loading: false, error: false };
-}
-
-const verifyPost = (state, post) => {
-    const hasPost = post.id ? true : false;
-
-    return { ...state, post, hasPost, loading: false, error: false };
+    if (state.posts.length > 0) {
+        const posts = state.posts.map(item => (item.id === post.id) ? { ...item, ...post } : item);
+        return { ...state, posts, loading: false, error: false };
+    } else
+        return { ...state, post, loading: false, error: false };
 }
 
 export default postsReducer;

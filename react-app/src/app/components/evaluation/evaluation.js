@@ -2,11 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button, IconButton, Typography } from 'material-ui';
 import { connect } from 'react-redux';
-import {
-  Star,
-  ThumbDown,
-  ThumbUp,
-} from 'material-ui-icons';
+import { Star, ThumbDown, ThumbUp, } from 'material-ui-icons';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -15,7 +11,6 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 import { setPostEvaluation } from '../../actions';
-
 
 class Evaluation extends PureComponent {
   state = {
