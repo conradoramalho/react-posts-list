@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { CardActions, IconButton, Typography, Paper } from 'material-ui'
 import { Delete, Comment } from 'material-ui-icons'
 import Header from '../../components/header/Header'
-import { getPostById } from '../../actions/post-actions'
+import { getPostById, deletePost } from '../../actions/post-actions'
 import Evaluation from '../../components/evaluation/evaluation'
 import CommentList from '../../components/comment/comment-list'
 
@@ -22,10 +22,17 @@ class PostData extends PureComponent {
     updateComment: PropTypes.func,
     loading: PropTypes.bool,
     hasPost: PropTypes.bool,
+    deletePost: PropTypes.func,
+    history: PropTypes.array,
   };
 
   componentDidMount() {
     this.props.getPostById(this.props.match.params.postId);
+  }
+
+  deletePost = (postId) => {
+    this.props.deletePost(postId);
+    this.props.history.push('/')
   }
 
   render() {
@@ -76,7 +83,7 @@ class PostData extends PureComponent {
                               {post.timestamp}
                             </Moment>
                           </Typography>
-                          <IconButton>
+                          <IconButton onClick={() => this.deletePost(post.id)}>
                             <Delete />
                           </IconButton>
                         </CardActions>
@@ -99,7 +106,8 @@ const mapStateToProps = ({ postsReducer, commentsReducer }) => ({
 });
 
 const mapDispatchToProps = {
-  getPostById
+  getPostById,
+  deletePost
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostData)

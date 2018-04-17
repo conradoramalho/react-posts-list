@@ -91,6 +91,13 @@ class API {
       url: `/comments/${commentId}`
     })
   );
+
+  static deletePost = (postId) => (
+    instance({
+      method: 'DELETE',
+      url: `/posts/${postId}`
+    })
+  );
 }
 
 export default API;

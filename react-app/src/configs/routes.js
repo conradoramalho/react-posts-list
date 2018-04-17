@@ -9,9 +9,9 @@ import NotFound from '../app/pages/404/not-found';
 const Routes = () => (
   <Switch >
     <Route exact path="/" component={Dashboard} />
+    <Route exact path="/posts/new" component={NewPost} />
     <Route exact path="/category/:category" component={CategoryPost} />
     <Route exact path="/:category/:postId" component={DataPost} />
-    <Route exact path="/posts/new" component={NewPost} />
     <Route path='/404' component={NotFound} />
     <Redirect from='*' to='/404' />
   </Switch>
