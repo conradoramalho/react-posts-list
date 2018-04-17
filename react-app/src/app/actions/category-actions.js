@@ -1,16 +1,10 @@
-export const CATEGORY_REQUEST = "CATEGORY_REQUEST";
-export const CATEGORY_REQUEST_SUCCESS = "CATEGORY_SUCCESS";
-export const CATEGORY_REQUEST_FAILURE = "CATEGORY_FAILURE";
-
-export const POST_CATEGORY_LIST_REQUEST = "POST_CATEGORY_LIST_REQUEST";
-export const POST_CATEGORY_LIST_SUCCESS = "POST_CATEGORY_LIST_SUCCESS";
-export const POST_CATEGORY_LIST_FAILURE = "POST_CATEGORY_LIST_FAILURE";
+import * as ACTIONS from './types';
 
 export const getCategoryList = () => ({
-  type: CATEGORY_REQUEST
+  type: ACTIONS.CATEGORY_REQUEST
 });
 
 export const getPostCategory = category => ({
-  type: POST_CATEGORY_LIST_REQUEST,
+  type: ACTIONS.POST_CATEGORY_LIST_REQUEST,
   payload: category
 });

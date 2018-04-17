@@ -1,5 +1,5 @@
 import { all, call, takeLatest, put } from 'redux-saga/effects';
-import * as ACTIONS from '../actions/category-actions';
+import * as ACTIONS from '../actions/types';
 import API from '../api';
 
 function* getCategoryList() {

@@ -1,100 +1,96 @@
 import instance from './api.config';
 
-const getCommentsByPostId = (postId) => (
+class API {
+  static getCommentsByPostId = (postId) => (
     instance({
-        method: 'GET',
-        url: `/posts/${postId}/comments`,
+      method: 'GET',
+      url: `/posts/${postId}/comments`,
     })
-)
+  )
 
-const getPostById = (postId) => (
+  static getPostById = (postId) => (
     instance({
-        method: 'GET',
-        url: `/posts/${postId}`
+      method: 'GET',
+      url: `/posts/${postId}`
     })
-);
+  );
 
-const getPosts = () => (
+  static getPosts = () => (
     instance({
-        method: 'GET',
-        url: '/posts'
+      method: 'GET',
+      url: '/posts'
     })
-);
+  );
 
-const getPostCategories = (category) => (
+  static getPostCategories = (category) => (
     instance({
-        method: 'GET',
-        url: `/${category}/posts`
+      method: 'GET',
+      url: `/${category}/posts`
     })
-);
+  );
 
-const getCategories = () => (
+  static getCategories = () => (
     instance({
-        method: 'GET',
-        url: '/categories'
+      method: 'GET',
+      url: '/categories'
     })
-);
+  );
 
-const setEvaluation = (postId, evaluation) => (
+  static setEvaluation = (postId, evaluation) => (
     instance({
-        method: 'POST',
-        url: `/posts/${postId}`,
-        data: {
-            option: evaluation
-        }
+      method: 'POST',
+      url: `/posts/${postId}`,
+      data: {
+        option: evaluation
+      }
     })
-);
+  );
 
-const sendNewComment = (params) => (
+  static sendNewComment = (params) => (
     instance({
-        method: 'POST',
-        url: '/comments',
-        data: params
+      method: 'POST',
+      url: '/comments',
+      data: params
     })
-);
+  );
 
-const updateComment = ({ id, body }) => (
+  static updateComment = ({ id, body }) => (
     instance({
-        method: 'PUT',
-        url: `/comments/${id}`,
-        data: {
-            timestamp: new Date().getTime(),
-            body
-        }
+      method: 'PUT',
+      url: `/comments/${id}`,
+      data: {
+        timestamp: new Date().getTime(),
+        body
+      }
     })
-);
+  );
 
-const savePost = (data) => (
+  static deleteComment = ({ id }) => (
     instance({
-        method: 'POST',
-        url: '/posts',
-        data: {
-            ...data,
-            id: Math.random().toString(36).substring(2, 15),
-            author: 'Conrado Ramalho',
-            timestamp: new Date().getTime()
-        }
+      method: 'DELTE',
+      url: `/comments/${id}`
     })
-);
+  );
 
-const deletePost = (postId) => (
+  static savePost = (data) => (
     instance({
-        method: 'DELETE',
-        url: `/posts/${postId}`
+      method: 'POST',
+      url: '/posts',
+      data: {
+        ...data,
+        id: Math.random().toString(36).substring(2, 15),
+        author: 'Conrado Ramalho',
+        timestamp: new Date().getTime()
+      }
     })
-);
+  );
 
-const API = {
-    getCommentsByPostId,
-    getPostById,
-    getPostCategories,
-    setEvaluation,
-    getPosts,
-    sendNewComment,
-    getCategories,
-    updateComment,
-    savePost,
-    deletePost
-};
+  static deleteComment = (commentId) => (
+    instance({
+      method: 'DELETE',
+      url: `/comments/${commentId}`
+    })
+  );
+}
 
 export default API;

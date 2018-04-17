@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid';
-import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import Header from '../../components/header/Header';
 import PostCard from '../../components/post-card/post-card'
 import { getPostCategory } from '../../actions';
 
 class PostList extends Component {
+  state = {
+    category: ''
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { category } = nextProps.match.params;
+    console.log('category: ', category);
+
+    return {
+      category
+    }
+  }
+
   componentDidMount() {
-    this.props.getPostCategory(this.props.match.params.category);
+    console.log('this: ', this);
   }
 
   render() {
+    const { category } = this.state;
+    console.log('categorya: ', category);
     return (
       <div>
         <Grid container spacing={24}>
@@ -34,15 +48,14 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    posts: state.categoriesReducer.postsCategory.filter(x => !x.deleted)
-  }
-}
+const mapStateToProps = (state) => ({
+  posts: state.categoriesReducer.postsCategory.filter(x => !x.deleted)
+})
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+
+const mapDispatchToProps = {
   getPostCategory
-}, dispatch);
+};
 
 PostList.propTypes = {
   getPostsCategory: PropTypes.func,

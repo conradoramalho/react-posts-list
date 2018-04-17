@@ -1,4 +1,4 @@
-import * as ACTIONS from '../actions/comment-actions';
+import * as ACTIONS from '../actions/types';
 
 const initialState = {
     comments: [],
@@ -26,6 +26,12 @@ const commentsReducer = (state = initialState, action) => {
             return updateCommentSuccess(state, action.payload)
         case ACTIONS.UPDATE_COMMENTS_REQUEST_FAILURE:
             return { ...state, comments: [], loading: false, error: action.payload };
+        case ACTIONS.DELETE_COMMENT_REQUEST:
+            return { ...state, loading: true };
+        case ACTIONS.DELETE_COMMENT_REQUEST_SUCCESS:
+            return updateCommentSuccess(state, action.payload)
+        case ACTIONS.DELETE_COMMENT_REQUEST_FAILURE:
+            return { ...state, loading: false, error: action.payload };
         default:
             return state;
     }
@@ -33,7 +39,7 @@ const commentsReducer = (state = initialState, action) => {
 
 export default commentsReducer;
 
-function updateCommentSuccess(state, comment) {
+const updateCommentSuccess = (state, comment) => {
     const newComments = state.comments.map((item) => {
         if (comment.id !== item.id)
             return item;

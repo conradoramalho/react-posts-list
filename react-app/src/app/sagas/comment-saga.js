@@ -1,5 +1,5 @@
 import { all, call, takeLatest, put } from 'redux-saga/effects';
-import * as ACTIONS from '../actions/comment-actions';
+import * as ACTIONS from '../actions/types';
 import API from '../api';
 
 function* getCommentsByPostId({ payload }) {
@@ -34,10 +34,21 @@ function* updateComment({ payload }) {
     }
 }
 
+function* deleteComment({ payload }) {
+    try {
+        const { data } = yield call(API.deleteComment, payload);
+        yield put({ type: ACTIONS.DELETE_COMMENT_REQUEST_SUCCESS, payload: data });
+
+    } catch (error) {
+        yield put({ type: ACTIONS.DELETE_COMMENT_REQUEST_FAILURE, payload: error });
+    }
+}
+
 export default function* root() {
     yield all([
         takeLatest(ACTIONS.COMMENTS_REQUEST, getCommentsByPostId),
         takeLatest(ACTIONS.COMMENTS_NEW_REQUEST, sendNewComment),
         takeLatest(ACTIONS.UPDATE_COMMENTS_REQUEST, updateComment),
+        takeLatest(ACTIONS.DELETE_COMMENT_REQUEST, deleteComment),
     ])
 }

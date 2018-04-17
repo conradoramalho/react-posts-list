@@ -1,5 +1,5 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import * as ACTIONS from '../actions/post-actions';
+import * as ACTIONS from '../actions/types';
 
 import API from '../api';
 
@@ -56,9 +56,9 @@ function* savePost({ payload }) {
     }
 }
 
-function* deletePost({ payload }) {
+function* deleteComment({ payload }) {
     try {
-        const { data } = yield call(API.deletePost, payload);
+        const { data } = yield call(API.deleteComment, payload);
 
         yield put({ type: ACTIONS.DELETE_POST_SUCCESS, payload: data });
 
@@ -75,6 +75,6 @@ export default function* root() {
         takeLatest(ACTIONS.POST_REQUEST, getPostById),
         takeLatest(ACTIONS.EVALUATION_POST_REQUEST, setPostEvaluation),
         takeLatest(ACTIONS.SAVE_POST_REQUEST, savePost),
-        takeLatest(ACTIONS.DELETE_POST_REQUEST, deletePost),
+        takeLatest(ACTIONS.DELETE_POST_REQUEST, deleteComment),
     ]);
 }

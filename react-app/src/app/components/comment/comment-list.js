@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import Moment from 'react-moment'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
-import { Typography, Paper } from 'material-ui'
-import { Send } from 'material-ui-icons'
-import { getCommentsByPostId, sendNewComment, updateComment } from '../../actions/comment-actions'
+import { IconButton, Typography, Paper } from 'material-ui'
+import { Delete, Send } from 'material-ui-icons'
+import { getCommentsByPostId, sendNewComment, updateComment, deleteComment } from '../../actions/comment-actions'
 import EditComment from '../comment/edit-comment'
 
 class CommentList extends PureComponent {
@@ -20,7 +20,8 @@ class CommentList extends PureComponent {
     postId: PropTypes.string,
     comments: PropTypes.array,
     sendNewComment: PropTypes.func,
-    updateComment: PropTypes.func
+    updateComment: PropTypes.func,
+    deleteComment: PropTypes.func,
   }
 
   componentDidMount() {
@@ -56,6 +57,10 @@ class CommentList extends PureComponent {
     this.setState({ open: false, editComment: {} });
   }
 
+  deletePost = (commentId) => {
+    this.props.deleteComment(commentId)
+  }
+
   handleClose = () => {
     this.setState({ open: false, editComment: {} });
   }
@@ -68,26 +73,32 @@ class CommentList extends PureComponent {
         <Paper className="post-data comments" elevation={4}>
           {
             comments &&
-            comments.map((comment, index) => (
-              <div key={index} >
-                <Typography component="p">
-                  {comment.body}
-                </Typography>
-                <Typography component="p">
-                  {comment.author}
-                </Typography>
-                <Typography component="p">
-                  <Moment format="DD/MM/YYYY" >
-                    {comment.timestamp}
-                  </Moment>
-                </Typography>
-                <Button variant="raised" type="button" onClick={() => this.setEditComment(comment)}>
-                  edit
-                </Button>
-              </div>
-            ))
+            comments.map((comment, index) => {
+              if (!comment.deleted) {
+                return (
+                  <div key={index} >
+                    <Typography component="p">
+                      {comment.body}
+                    </Typography>
+                    <Typography component="p">
+                      {comment.author}
+                    </Typography>
+                    <Typography component="p">
+                      <Moment format="DD/MM/YYYY" >
+                        {comment.timestamp}
+                      </Moment>
+                    </Typography>
+                    <Button variant="raised" type="button" onClick={() => this.setEditComment(comment)}>
+                      edit
+                                  </Button>
+                    <IconButton onClick={() => this.deletePost(comment.id)}>
+                      <Delete />
+                    </IconButton>
+                  </div>
+                )
+              }
+            })
           }
-
           <form onSubmit={(event) => this.handleSubmit(event)}>
             <TextField
               id="Comments"
@@ -124,7 +135,8 @@ const mapStateToProps = ({ commentsReducer: { comments } }) => ({
 const mapDispatchToProps = {
   getCommentsByPostId,
   sendNewComment,
-  updateComment
+  updateComment,
+  deleteComment
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentList);
