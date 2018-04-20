@@ -98,9 +98,6 @@ class EditPost extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ postsReducer }) => ({
-  post: postsReducer.post
-});
 
 const mapDispatchToProps = {
   updatePost
@@ -109,7 +106,8 @@ const mapDispatchToProps = {
 EditPost.propTypes = {
   post: PropTypes.object,
   updatePost: PropTypes.func,
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  closeModal: PropTypes.func,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPost); 
+export default connect(null, mapDispatchToProps)(EditPost); 

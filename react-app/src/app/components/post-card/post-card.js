@@ -7,11 +7,16 @@ import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { Delete, Comment } from 'material-ui-icons';
 import Evaluation from '../evaluation/evaluation';
+import EditPost from '../edit-post/edit-post'
 
 import './post-card.css';
 import { deletePost } from '../../actions';
 
 class PostCard extends PureComponent {
+  state = {
+    openModal: false
+  };
+
   static propTypes = {
     setEvaluation: PropTypes.func,
     post: PropTypes.shape({
@@ -24,8 +29,13 @@ class PostCard extends PureComponent {
     this.props.deletePost(this.props.post.id);
   }
 
+  closeModal = () => {
+    this.setState({ openModal: false })
+  }
+
   render() {
     const { post } = this.props;
+    const { openModal } = this.state;
 
     return (
       <section className="post-card">
@@ -33,6 +43,7 @@ class PostCard extends PureComponent {
           post &&
           <Card key={post.id}>
             <CardContent>
+              <EditPost post={post} open={openModal} closeModal={this.closeModal} />
               <Link to={`/${post.category}/${post.id}`}>
                 <div className="header-card">
                   <Typography className="title" type="headline" component="h2">
@@ -72,6 +83,9 @@ class PostCard extends PureComponent {
               <IconButton onClick={this.deletePost}>
                 <Delete />
               </IconButton>
+              <button onClick={() => this.setState({ openModal: true })}>
+                Editar
+              </button>
             </CardActions>
           </Card>
         }

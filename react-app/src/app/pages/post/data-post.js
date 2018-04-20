@@ -28,7 +28,7 @@ class PostData extends PureComponent {
     loading: PropTypes.bool,
     hasPost: PropTypes.bool,
     deletePost: PropTypes.func,
-    history: PropTypes.array,
+    history: PropTypes.object,
   };
 
   componentDidMount() {
@@ -64,9 +64,9 @@ class PostData extends PureComponent {
                 ) :
                 (
                   <Fragment>
-                    <EditPost open={this.state.openModal} closeModal={this.closeModal}></EditPost>
+                    <EditPost post={post} open={this.state.openModal} closeModal={this.closeModal} />
                     <section>
-                      <Header title='List of posts' />
+                      <Header title='Post Data' />
                       <Paper className="post-data" elevation={4}>
                         <Typography className="title" variant="headline" component="h1">
                           {post.title}

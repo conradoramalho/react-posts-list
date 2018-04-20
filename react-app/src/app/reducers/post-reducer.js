@@ -46,13 +46,15 @@ const postsReducer = (state = initialState, action) => {
 }
 
 const updatePost = (state, post) => {
-    if (post.id) {
+    if (state.post.id)
         return { ...state, post, loading: false, error: false };
-    } else if (state.posts.length > 0) {
+
+    if (state.posts.length > 0) {
         const posts = state.posts.map(item => (item.id === post.id) ? { ...item, ...post } : item);
         return { ...state, posts, loading: false, error: false };
-    } else
-        return { ...state };
+    }
+
+    return { ...state };
 }
 
 export default postsReducer;

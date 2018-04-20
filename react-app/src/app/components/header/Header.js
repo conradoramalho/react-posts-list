@@ -41,8 +41,7 @@ class Header extends PureComponent {
 
   render() {
     const { title, match: { params } } = this.props;
-
-    let categories = this.props.categories.filter(category => category.path !== params.category);
+    let { categories } = this.props;
 
     if (params.category)
       categories = [{ name: 'dashboard', path: '' }, ...categories];
