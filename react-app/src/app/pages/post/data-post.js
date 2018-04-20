@@ -9,6 +9,7 @@ import Header from '../../components/header/Header'
 import { getPostById, deletePost } from '../../actions/post-actions'
 import Evaluation from '../../components/evaluation/evaluation'
 import CommentList from '../../components/comment/comment-list'
+import EditPost from '../../components/edit-post/edit-post'
 
 import './data-post.css';
 
@@ -55,6 +56,7 @@ class PostData extends PureComponent {
                 ) :
                 (
                   <Fragment>
+                    <EditPost open post={post}></EditPost>
                     <section>
                       <Header title='List of posts' />
                       <Paper className="post-data" elevation={4}>

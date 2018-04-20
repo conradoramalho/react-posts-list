@@ -30,18 +30,23 @@ class CommentList extends PureComponent {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const timestamp = new Date().getTime();
+    const { Comments, Author } = event.target;
 
-    const params = {
-      id: timestamp,
-      timestamp,
-      body: event.target.Comments.value,
-      parentId: this.props.postId,
-      author: 'anonymous'
-    };
+    if (Comments.value.replace(/ /g, '') !== '' && Author.value.replace(/ /g, '') !== '') {
+      const timestamp = new Date().getTime();
 
-    this.props.sendNewComment(params);
-    event.target.Comments.value = '';
+      const params = {
+        id: timestamp,
+        timestamp,
+        body: Comments.value,
+        parentId: this.props.postId,
+        author: Author.value
+      };
+
+      this.props.sendNewComment(params);
+      Comments.value = '';
+      Author.value = '';
+    }
   }
 
   setEditComment = (comment) => {
@@ -100,6 +105,16 @@ class CommentList extends PureComponent {
             })
           }
           <form onSubmit={(event) => this.handleSubmit(event)}>
+            <TextField
+              id="Author"
+              label="Author"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Your name!"
+              fullWidth
+              margin="normal"
+            />
             <TextField
               id="Comments"
               label="Comments"

@@ -13,20 +13,28 @@ class PostList extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { category } = nextProps.match.params;
-    console.log('category: ', category);
 
-    return {
-      category
+    if (category !== prevState.category) {
+      return {
+        category
+      }
     }
+
+    return null;
   }
 
   componentDidMount() {
-    console.log('this: ', this);
+    this.props.getPostCategory(this.state.category);
+  }
+
+  componentDidUpdate(prevProps, { category }) {
+
+    if (category !== this.state.category)
+      this.props.getPostCategory(this.state.category);
+
   }
 
   render() {
-    const { category } = this.state;
-    console.log('categorya: ', category);
     return (
       <div>
         <Grid container spacing={24}>
