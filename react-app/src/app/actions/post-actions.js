@@ -23,3 +23,8 @@ export const deletePost = params => ({
   type: ACTIONS.DELETE_POST_REQUEST,
   payload: params
 });
+
+export const updatePost = params => ({
+  type: ACTIONS.UPDATE_POST_REQUEST,
+  payload: params
+});

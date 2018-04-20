@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import { Button } from 'material-ui';
 import TextField from 'material-ui/TextField'
 import Dialog, {
@@ -7,6 +8,7 @@ import Dialog, {
   DialogContent,
   DialogTitle,
 } from 'material-ui/Dialog';
+import { updatePost } from '../../actions/post-actions'
 
 class EditPost extends PureComponent {
   state = {
@@ -31,8 +33,12 @@ class EditPost extends PureComponent {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log('event: ', event.target.body.value);
 
+    const { post } = this.props;
+    const { title, body } = this.state;
+
+    this.props.updatePost({ postId: post.id, title, body });
+    this.props.closeModal();
   }
 
   handleChange = name => event => {
@@ -40,10 +46,8 @@ class EditPost extends PureComponent {
     this.setState({ [name]: value });
   };
 
-
-
   render() {
-    const { post, open } = this.props;
+    const { open } = this.props;
 
     return (
       <Dialog
@@ -84,7 +88,7 @@ class EditPost extends PureComponent {
             <Button variant="raised" color="primary" type="submit">
               Save
             </Button>
-            <Button color="secondary">
+            <Button color="secondary" onClick={() => this.props.closeModal()}>
               Cancel
             </Button>
           </DialogActions>
@@ -94,9 +98,18 @@ class EditPost extends PureComponent {
   }
 }
 
+const mapStateToProps = ({ postsReducer }) => ({
+  post: postsReducer.post
+});
+
+const mapDispatchToProps = {
+  updatePost
+};
+
 EditPost.propTypes = {
   post: PropTypes.object,
+  updatePost: PropTypes.func,
   open: PropTypes.bool
 };
 
-export default EditPost; 
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost); 

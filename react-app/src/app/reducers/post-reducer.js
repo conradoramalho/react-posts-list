@@ -22,6 +22,12 @@ const postsReducer = (state = initialState, action) => {
             return { ...state, post: action.payload, loading: false };
         case ACTIONS.POST_FAILURE:
             return { ...state, post: {}, loading: false, error: true };
+        case ACTIONS.UPDATE_POST_REQUEST:
+            return { ...state, loading: true };
+        case ACTIONS.UPDATE_POST_SUCCESS:
+            return updatePost(state, action.payload);
+        case ACTIONS.UPDATE_POST_FAILURE:
+            return { ...state, loading: false, error: true };
         case ACTIONS.DELETE_POST_REQUEST:
             return { ...state, loading: true };
         case ACTIONS.DELETE_POST_SUCCESS:
@@ -40,11 +46,13 @@ const postsReducer = (state = initialState, action) => {
 }
 
 const updatePost = (state, post) => {
-    if (state.posts.length > 0) {
+    if (post.id) {
+        return { ...state, post, loading: false, error: false };
+    } else if (state.posts.length > 0) {
         const posts = state.posts.map(item => (item.id === post.id) ? { ...item, ...post } : item);
         return { ...state, posts, loading: false, error: false };
     } else
-        return { ...state, post, loading: false, error: false };
+        return { ...state };
 }
 
 export default postsReducer;

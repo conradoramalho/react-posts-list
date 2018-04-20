@@ -85,6 +85,17 @@ class API {
     })
   );
 
+  static updatePost = ({ postId, title, body }) => (
+    instance({
+      method: 'PUT',
+      url: `/posts/${postId}`,
+      data: {
+        title,
+        body
+      }
+    })
+  );
+
   static deleteComment = (commentId) => (
     instance({
       method: 'DELETE',

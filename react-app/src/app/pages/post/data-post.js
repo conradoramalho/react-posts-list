@@ -14,6 +14,10 @@ import EditPost from '../../components/edit-post/edit-post'
 import './data-post.css';
 
 class PostData extends PureComponent {
+  state = {
+    openModal: false
+  }
+
   static propTypes = {
     post: PropTypes.object,
     getPostById: PropTypes.func,
@@ -36,6 +40,10 @@ class PostData extends PureComponent {
     this.props.history.push('/')
   }
 
+  closeModal = () => {
+    this.setState({ openModal: false })
+  }
+
   render() {
     const { post, loading } = this.props;
 
@@ -56,7 +64,7 @@ class PostData extends PureComponent {
                 ) :
                 (
                   <Fragment>
-                    <EditPost open post={post}></EditPost>
+                    <EditPost open={this.state.openModal} closeModal={this.closeModal}></EditPost>
                     <section>
                       <Header title='List of posts' />
                       <Paper className="post-data" elevation={4}>
@@ -87,6 +95,9 @@ class PostData extends PureComponent {
                           </Typography>
                           <IconButton onClick={() => this.deletePost(post.id)}>
                             <Delete />
+                          </IconButton>
+                          <IconButton onClick={() => this.setState({ openModal: true })}>
+                            Editar
                           </IconButton>
                         </CardActions>
                       </Paper>
