@@ -6,8 +6,13 @@ import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import { IconButton, Typography, Paper } from 'material-ui'
 import { Delete, Send } from 'material-ui-icons'
-import { getCommentsByPostId, sendNewComment, updateComment, deleteComment } from '../../actions/comment-actions'
 import EditComment from '../comment/edit-comment'
+import {
+  getCommentsByPostId,
+  sendNewComment,
+  updateComment,
+  deleteComment
+} from '../../actions/comment-actions'
 
 class CommentList extends PureComponent {
   state = {
@@ -78,31 +83,27 @@ class CommentList extends PureComponent {
         <Paper className="post-data comments" elevation={4}>
           {
             comments &&
-            comments.map((comment, index) => {
-              if (!comment.deleted) {
-                return (
-                  <div key={index} >
-                    <Typography component="p">
-                      {comment.body}
-                    </Typography>
-                    <Typography component="p">
-                      {comment.author}
-                    </Typography>
-                    <Typography component="p">
-                      <Moment format="DD/MM/YYYY" >
-                        {comment.timestamp}
-                      </Moment>
-                    </Typography>
-                    <Button variant="raised" type="button" onClick={() => this.setEditComment(comment)}>
-                      edit
-                                  </Button>
-                    <IconButton onClick={() => this.deletePost(comment.id)}>
-                      <Delete />
-                    </IconButton>
-                  </div>
-                )
-              }
-            })
+            comments.map((comment) => (
+              <div key={comment.id} >
+                <Typography component="p">
+                  {comment.body}
+                </Typography>
+                <Typography component="p">
+                  {comment.author}
+                </Typography>
+                <Typography component="p">
+                  <Moment format="DD/MM/YYYY" >
+                    {comment.timestamp}
+                  </Moment>
+                </Typography>
+                <Button variant="raised" type="button" onClick={() => this.setEditComment(comment)}>
+                  edit
+                </Button>
+                <IconButton onClick={() => this.deletePost(comment.id)}>
+                  <Delete />
+                </IconButton>
+              </div>
+            ))
           }
           <form onSubmit={(event) => this.handleSubmit(event)}>
             <TextField
@@ -144,7 +145,7 @@ class CommentList extends PureComponent {
 }
 
 const mapStateToProps = ({ commentsReducer: { comments } }) => ({
-  comments
+  comments: comments.filter(comment => !(comment.deleted))
 });
 
 const mapDispatchToProps = {

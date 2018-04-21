@@ -16,6 +16,13 @@ class EditPost extends PureComponent {
     body: ''
   }
 
+  static propTypes = {
+    post: PropTypes.object,
+    updatePost: PropTypes.func,
+    open: PropTypes.bool,
+    closeModal: PropTypes.func,
+  };
+
   static getDerivedStateFromProps(nextProps, { title, body }) {
     const newTitle = nextProps.post.title;
     const newBody = nextProps.post.body;
@@ -98,16 +105,8 @@ class EditPost extends PureComponent {
   }
 }
 
-
 const mapDispatchToProps = {
   updatePost
-};
-
-EditPost.propTypes = {
-  post: PropTypes.object,
-  updatePost: PropTypes.func,
-  open: PropTypes.bool,
-  closeModal: PropTypes.func,
 };
 
 export default connect(null, mapDispatchToProps)(EditPost); 

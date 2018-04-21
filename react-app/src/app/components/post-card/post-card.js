@@ -98,4 +98,4 @@ const mapDispatchToProps = {
   deletePost
 };
 
-export default connect('', mapDispatchToProps)(PostCard);
+export default connect(null, mapDispatchToProps)(PostCard);

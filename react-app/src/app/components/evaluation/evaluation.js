@@ -18,7 +18,8 @@ class Evaluation extends PureComponent {
   }
 
   static propTypes = {
-    setPostEvaluation: PropTypes.func
+    setPostEvaluation: PropTypes.func,
+    voteScore: PropTypes.number,
   }
 
   handleOpen = () => {
@@ -84,4 +85,4 @@ const mapDispatchToProps = {
   setPostEvaluation
 };
 
-export default connect('', mapDispatchToProps)(Evaluation); 
+export default connect(null, mapDispatchToProps)(Evaluation);
